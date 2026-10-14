@@ -232,4 +232,10 @@ JavaScript 모듈로 계산·해석·화면 처리를 분리한다. 위 구조�
 
 ### 메뉴별 페이지 분리
 
+### 공통 UI 클래스
+
+반복 UI는 기본 클래스와 변형 클래스를 조합한다. 버튼은 `button`에 색상(`button-dark`, `button-soft`, `button-lime`, `button-outline`)과 형태(`button-icon`, `button-full`)를 추가한다. 배지는 `badge`와 `badge-mint`, 입력창은 `form-input`, 카드는 `card`와 `card-lime`, 반복되는 대시보드 열 배치는 `dashboard-grid`를 사용한다. 영역별 여백이나 개별 동작은 해당 영역 클래스에서 관리한다.
+
+### 페이지 이동과 입력 정보
+
 오늘의 운세는 `index.html`, 사주팔자는 `saju.html`, 내 성향은 `personality.html`로 분리한다. 상대 경로 링크로 이동하고 공통 CSS와 입력 기능을 공유한다. 출생 정보는 `sessionStorage`에 임시 보관해 같은 탭의 이동·새로고침 때 복원한다. 서버로 전송하지 않으며 저장이 차단되면 현재 페이지에서만 사용할 수 있다. 실제 계산은 아직 미연결이다.

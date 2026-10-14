@@ -31,6 +31,7 @@ ES 모듈을 사용하므로 HTML 파일을 직접 여는 대신 개발 서버�
 - `saju.html`: 사주팔자
 - `personality.html`: 내 성향
 - `css/style.css`: 디자인과 반응형 레이아웃
+  - 공통 UI: `button`과 색상·형태 변형, `badge`, `form-input`, `card`, `dashboard-grid`
 - `js/common.js`: 공통 출생 정보 입력·검증, 임시 저장, 날짜 표시
 - `js/today.js`: 오늘의 운세 화면과 실천 체크
 - `js/saju.js`: 사주팔자 화면

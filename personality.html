@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8">
@@ -61,7 +61,7 @@
       <section id="personality-view" class="view" aria-labelledby="page-title">
         <article class="card personality-hero">
           <div>
-            <span class="pill"> 예시 성향 </span>
+            <span class="badge"> 예시 성향 </span>
             <h2> 나만의 길을 만드는 <br> 꾸준한 개척가. </h2>
             <p class="body-copy"> 스스로 방향을 정하고 한 걸음씩 나아가는 사람. 새로운 시도를 즐기면서도, 의미 있다고 느끼는 일에는 오래 집중하는 모습을 예시로 담았어요. </p>
             <div class="trait-tags">
@@ -86,12 +86,12 @@
           <div>
             <h2 id="dialog-title"> 나를 알아가는 첫걸음 </h2>
           </div>
-          <button type="button" id="close-dialog" class="close-button" aria-label="입력 창 닫기"> × </button>
+          <button type="button" id="close-dialog" class="button button-soft button-icon" aria-label="입력 창 닫기"> × </button>
         </div>
         <p class="muted"> 정보는 서버로 전송하지 않아요. 같은 탭의 페이지 이동과 새로고침 동안 임시 보관해요. </p>
         <div class="form-field">
           <label for="birth-date"> 생년월일 </label>
-          <input type="date" id="birth-date" name="birthDate" required>
+          <input class="form-input" type="date" id="birth-date" name="birthDate" required>
         </div>
         <fieldset>
           <legend> 달력 구분 </legend>
@@ -105,14 +105,14 @@
         </label>
         <div class="form-field">
           <label for="birth-time"> 출생 시간 </label>
-          <input type="time" id="birth-time" name="birthTime" value="12:00" required>
+          <input class="form-input" type="time" id="birth-time" name="birthTime" value="12:00" required>
         </div>
         <label class="checkbox-label">
           <input type="checkbox" id="unknown-time" name="unknownTime"> 출생 시간을 몰라요
         </label>
         <p id="form-error" class="form-error" role="alert"></p>
         <div class="info-note"> 현재는 입력 정보 표시만 반영해요. 운세·사주·성향은 동일한 예시 결과로 제공됩니다. </div>
-        <button type="submit" class="button button-dark submit-button"> 입력 정보 적용하고 예시 보기 <span aria-hidden="true"> ↗ </span> </button>
+        <button type="submit" class="button button-dark button-full submit-button"> 입력 정보 적용하고 예시 보기 <span aria-hidden="true"> ↗ </span> </button>
       </form>
     </dialog>
   </body>

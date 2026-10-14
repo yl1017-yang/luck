@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
 :root {
   --ink:#171914;
   --muted:#72776e;
@@ -224,6 +226,9 @@ h2,h3,p {
 }
 
 .button {
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
   border:0;
   border-radius:10px;
   padding:11px 18px;
@@ -314,11 +319,14 @@ h2,h3,p {
   background:#a5ddca;
 }
 
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0,1.85fr) minmax(0,1fr);
+  gap: 22px;
+}
+
 .content-grid {
-  display:grid;
-  grid-template-columns:minmax(0,1.85fr) minmax(0,1fr);
-  gap:22px;
-  margin-bottom:22px;
+  margin-bottom: 22px;
 }
 
 .card {
@@ -341,7 +349,7 @@ h2,h3,p {
   font-weight:800;
 }
 
-.pill {
+.badge {
   font-size:12px;
   border-radius:20px;
   background:#f1f3eb;
@@ -528,11 +536,7 @@ h2,h3,p {
   background:var(--mint);
 }
 
-.bottom-grid {
-  display:grid;
-  grid-template-columns:minmax(0,1.85fr) minmax(0,1fr);
-  gap:22px;
-}
+
 
 .hint-row {
   display:flex;
@@ -565,20 +569,23 @@ h2,h3,p {
   word-break:keep-all;
 }
 
+.badge-mint {
+  background: #e5f4ed;
+  color: #477b69;
+}
+
 .hint-badge {
-  margin-left:auto;
-  font-size:12px;
-  white-space:nowrap;
-  background:#e5f4ed;
-  color:#477b69;
-  border-radius:15px;
-  padding:4px 9px;
+  margin-left: auto;
+  white-space: nowrap;
+  border-radius: 15px;
+  padding: 4px 9px;
+}
+
+.card-lime {
+  background: var(--lime);
 }
 
 .action-card {
-  background:var(--lime);
-  border-radius:var(--radius);
-  padding:25px;
   position:relative;
   overflow:hidden;
   display:flex;
@@ -616,7 +623,6 @@ h2,h3,p {
 }
 
 .action-card .button {
-  width:100%;
   margin-top:auto;
   z-index:1;
 }
@@ -791,15 +797,48 @@ dialog::backdrop {
   margin-bottom:12px;
 }
 
-.close-button {
-  border:0;
-  background:#f1f3ec;
-  border-radius:50%;
-  width:32px;
-  height:32px;
-  font-size:25px;
-  line-height:1;
-  flex-shrink:0;
+.button-icon {
+  justify-content: center;
+  border-radius: 50%;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  font-size: 25px;
+  font-weight: inherit;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.button-soft {
+  background: #f1f3ec;
+  color: var(--ink);
+}
+
+.button-soft:hover {
+  background: #e4e8da;
+}
+
+.button-lime {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.button-lime:hover {
+  background: #cde63e;
+}
+
+.button-outline {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.button-outline:hover {
+  background: #f1f3ec;
+}
+
+.button-full {
+  width: 100%;
 }
 
 .form-field {
@@ -814,7 +853,7 @@ dialog::backdrop {
   font-weight:800;
 }
 
-input[type=date],input[type=time] {
+.form-input {
   min-width:0;
   width:100%;
   height:45px;
@@ -825,7 +864,7 @@ input[type=date],input[type=time] {
   color:var(--ink);
 }
 
-input:disabled {
+.form-input:disabled {
   background:#f0f2eb;
   color:#a5ad97;
 }
@@ -867,7 +906,6 @@ input[type=checkbox],input[type=radio] {
 }
 
 .submit-button {
-  width:100%;
   margin-top:20px;
 }
 
@@ -919,7 +957,7 @@ input[type=checkbox],input[type=radio] {
     display:none;
   }
 
-  .content-grid,.bottom-grid {
+  .dashboard-grid {
     grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
   }
 
@@ -997,7 +1035,7 @@ input[type=checkbox],input[type=radio] {
     font-size:12px;
   }
 
-  .content-grid,.bottom-grid {
+  .dashboard-grid {
     grid-template-columns:1fr;
   }
 
@@ -1105,6 +1143,10 @@ input[type=checkbox],input[type=radio] {
 
   .card {
     padding:20px;
+  }
+
+  .action-card {
+    padding:25px;
   }
 
   .profile-bar {

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8">
@@ -83,11 +83,11 @@
             <div class="summary-foot"> 새로운 길을 나만의 속도로 </div>
           </article>
         </div>
-        <div class="content-grid">
+        <div class="dashboard-grid content-grid">
           <article class="card daily-story">
             <div class="section-heading">
               <h2> 오늘의 흐름 </h2> 
-              <span class="pill"> 예시 해석 </span>
+              <span class="badge"> 예시 해석 </span>
             </div>
             <div class="story-layout">
               <div>
@@ -107,7 +107,7 @@
           <article class="card elements-card">
             <div class="section-heading">
               <h2> 나의 오행 구성 </h2>
-              <span class="pill"> 예시 </span>
+              <span class="badge"> 예시 </span>
             </div>
             <p class="muted small"> 목·화·토·금·수의 분포를 살펴보세요. </p>
             <div class="element-chart" role="img" aria-label="예시 오행 분포: 목 3, 화 1, 토 2, 금 1, 수 1">
@@ -152,7 +152,7 @@
             </div>
           </article>
         </div>
-        <div class="bottom-grid">
+        <div class="dashboard-grid">
           <article class="card">
             <div class="section-heading">
               <h2> 분야별 오늘의 힌트 </h2> 
@@ -160,11 +160,11 @@
             </div>
             <div id="daily-hints" class="hint-list"></div>
           </article>
-          <article class="action-card">
+          <article class="card card-lime action-card">
             <span class="action-star" aria-hidden="true"> ✳ </span>
             <h2> 생각하던 일에 <br> 딱 20분만 써보기. </h2>
            <p> 작은 행동 하나가 하루의 분위기를 바꿀 수 있어요. </p>
-            <button id="action-toggle" class="button button-dark" aria-pressed="false"> 오늘의 실천 체크 <span aria-hidden="true"> ↗ </span> </button>
+            <button id="action-toggle" class="button button-dark button-full" aria-pressed="false"> 오늘의 실천 체크 <span aria-hidden="true"> ↗ </span> </button>
             <span class="action-note"> 체크는 현재 페이지에서만 유지돼요. </span>
           </article>
         </div>
@@ -187,12 +187,12 @@
           <div>
             <h2 id="dialog-title"> 나를 알아가는 첫걸음 </h2>
           </div>
-          <button type="button" id="close-dialog" class="close-button" aria-label="입력 창 닫기"> × </button>
+          <button type="button" id="close-dialog" class="button button-soft button-icon" aria-label="입력 창 닫기"> × </button>
         </div>
         <p class="muted"> 정보는 서버로 전송하지 않아요. 같은 탭의 페이지 이동과 새로고침 동안 임시 보관해요. </p>
         <div class="form-field">
           <label for="birth-date"> 생년월일 </label>
-          <input type="date" id="birth-date" name="birthDate" required>
+          <input class="form-input" type="date" id="birth-date" name="birthDate" required>
         </div>
         <fieldset>
           <legend> 달력 구분 </legend>
@@ -206,14 +206,14 @@
         </label>
         <div class="form-field">
           <label for="birth-time"> 출생 시간 </label>
-          <input type="time" id="birth-time" name="birthTime" value="12:00" required>
+          <input class="form-input" type="time" id="birth-time" name="birthTime" value="12:00" required>
         </div>
         <label class="checkbox-label">
           <input type="checkbox" id="unknown-time" name="unknownTime"> 출생 시간을 몰라요
         </label>
         <p id="form-error" class="form-error" role="alert"></p>
         <div class="info-note"> 현재는 입력 정보 표시만 반영해요. 운세·사주·성향은 동일한 예시 결과로 제공됩니다. </div>
-        <button type="submit" class="button button-dark submit-button"> 입력 정보 적용하고 예시 보기 <span aria-hidden="true"> ↗ </span> </button>
+        <button type="submit" class="button button-dark button-full submit-button"> 입력 정보 적용하고 예시 보기 <span aria-hidden="true"> ↗ </span> </button>
       </form>
     </dialog>
   </body>

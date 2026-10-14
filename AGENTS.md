@@ -42,6 +42,7 @@
 - CSS는 선택자별로 블록을 나누고, 속성은 한 줄에 하나씩 작성한다. 한 줄로 압축하지 않는다.
 - JavaScript도 가독성을 유지하고, 동작이 다른 기능은 함수나 모듈로 분리한다.
 - 기존 사용자의 디자인·문구·스타일 변경을 보존한다.
+- 반복 UI는 공통 클래스를 조합한다. 버튼은 `.button` + 색상(`.button-dark`, `.button-soft`, `.button-lime`, `.button-outline`) + 형태(`.button-icon`, `.button-full`), 배지는 `.badge` + `.badge-mint`, 입력창은 `.form-input`, 카드는 `.card` + `.card-lime`, 대시보드 열 배치는 `.dashboard-grid`를 사용한다.
 - 사용자가 입력한 값은 `textContent` 등 안전한 방식으로 표시한다.
 
 ## 디자인 기준
