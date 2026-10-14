@@ -1,0 +1,221 @@
+﻿<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#151713">
+    <meta name="description" content="오늘의 작은 힌트, 나를 알아가는 시간. 오늘의 운세와 사주, 성향을 만나는 운세 대시보드.">
+    <title>오늘의 운세 — 오늘의 결</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script type="module" src="./js/today.js">
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main"> 본문으로 건너뛰기 </a>
+
+    <header class="header">
+      <div class="header-inner container">
+        <a class="brand" href="./index.html" aria-label="오늘의 결 홈">
+          <span class="brand-symbol" aria-hidden="true"> ✳ </span> 오늘의 결 <span class="brand-dot"> . </span>
+        </a>
+        <nav aria-label="운세 메뉴" class="navigation">
+          <a class="nav-button active" href="./index.html" aria-current="page">오늘의 운세</a>
+          <a class="nav-button" href="./saju.html">사주팔자</a>
+          <a class="nav-button" href="./personality.html">내 성향</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="container dashboard">
+      <div class="page-intro">
+        <div>
+          <h1 id="page-title"> 오늘, 나에게 좋은 흐름. </h1>
+          <p id="page-description" class="muted"> 잠깐의 여유로 오늘의 힌트를 만나보세요. </p>
+        </div>
+        <div class="date-label">
+          <span class="status-dot"> </span>
+          <span id="today-date"> </span>
+        </div>
+      </div>
+
+      <div class="demo-notice">
+        <span class="demo-tag"> PREVIEW </span>
+        <p> 현재는 화면 확인용 예시 결과예요. 입력한 생년월일로 실제 사주나 운세를 계산하지 않아요. </p>
+      </div>
+
+      <section class="profile-bar" aria-label="출생 정보">
+        <div class="profile-icon" aria-hidden="true"> ✦ </div>
+        <div class="profile-copy">
+          <strong id="profile-title"> 나만의 하루를 만나볼까요? </strong> 
+          <p id="profile-description"> 출생 정보를 입력하고 대시보드를 둘러보세요. </p>
+        </div>
+        <button id="edit-profile" class="button button-dark">
+          정보 입력 <span aria-hidden="true"> ↗ </span>
+        </button>
+      </section>
+
+      <section id="today-view" class="view" aria-labelledby="page-title">
+        <div class="summary-grid">
+          <article class="summary-card">
+            <div class="summary-main">
+              <span class="summary-icon" aria-hidden="true"> ✺ </span>
+              <div> <p> 오늘의 키워드 </p> <h2> 작은 시작 </h2> </div>
+              <span class="card-arrow" aria-hidden="true"> ↗ </span>
+            </div>
+            <div class="summary-foot">
+              완벽함보다 첫걸음이 필요한 날
+            </div>
+          </article>
+          <article class="summary-card">
+            <div class="summary-main">
+              <span class="summary-icon" aria-hidden="true"> ♧ </span>
+              <div> <p> 나를 나타내는 일간 · 예시 </p> <h2> 갑목 <span> 甲木 </span> </h2> </div>
+              <span class="card-arrow" aria-hidden="true"> ↗ </span>
+            </div>
+            <div class="summary-foot mint"> 곧게 자라는 나무 같은 에너지 </div>
+          </article>
+          <article class="summary-card">
+            <div class="summary-main">
+              <span class="summary-icon" aria-hidden="true"> ✧ </span>
+              <div> <p> 대표 성향 · 예시 </p> <h2> 꾸준한 개척가 </h2> </div>
+              <span class="card-arrow" aria-hidden="true"> ↗ </span>
+            </div>
+            <div class="summary-foot"> 새로운 길을 나만의 속도로 </div>
+          </article>
+        </div>
+        <div class="content-grid">
+          <article class="card daily-story">
+            <div class="section-heading">
+              <h2> 오늘의 흐름 </h2> 
+              <span class="pill"> 예시 해석 </span>
+            </div>
+            <div class="story-layout">
+              <div>
+                <h3> 작게 시작해도, <br> 방향은 분명하게. </h3>
+                <p class="body-copy"> 오랫동안 생각만 했던 일이 있다면 오늘은 작은 첫걸음을 내디뎌 보세요. 모든 준비가 끝날 때까지 기다리기보다, 지금 할 수 있는 한 가지에 집중해 보는 거예요. </p>
+                <div class="story-note"> <span aria-hidden="true"> ↗ </span> 내 속도를 지키는 것이 오늘의 포인트 </div>
+              </div>
+              <div class="orbit-art" aria-hidden="true">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="orbit-core"> ✳ </div> 
+                <span class="orbit-spark"> ✦ </span>
+                <span class="orbit-caption"> MAKE YOUR <br> OWN LUCK </span>
+              </div>
+            </div>
+          </article>
+          <article class="card elements-card">
+            <div class="section-heading">
+              <h2> 나의 오행 구성 </h2>
+              <span class="pill"> 예시 </span>
+            </div>
+            <p class="muted small"> 목·화·토·금·수의 분포를 살펴보세요. </p>
+            <div class="element-chart" role="img" aria-label="예시 오행 분포: 목 3, 화 1, 토 2, 금 1, 수 1">
+              <div class="element-column">
+               <span> 3 </span>
+                <div class="bar-track">
+                  <div class="bar wood" style="--level:100%"></div>
+                </div>
+                <strong> 목 </strong>
+              </div>
+              <div class="element-column">
+                <span> 1 </span>
+                <div class="bar-track">
+                  <div class="bar fire" style="--level:33%"></div>
+                </div>
+                <strong> 화 </strong>
+              </div>
+              <div class="element-column">
+                <span> 2 </span>
+                <div class="bar-track">
+                  <div class="bar earth" style="--level:66%"></div>
+                </div>
+                <strong> 토 </strong>
+              </div>
+              <div class="element-column">
+                <span> 1 </span>
+                <div class="bar-track">
+                  <div class="bar metal" style="--level:33%"></div>
+                </div>
+                <strong> 금 </strong>
+              </div>
+              <div class="element-column">
+                <span> 1 </span>
+                <div class="bar-track">
+                  <div class="bar water" style="--level:33%"></div>
+                </div>
+                <strong> 수 </strong>
+              </div>
+            </div>
+            <div class="chart-note">
+              <span class="legend-dot"></span> 목의 기운이 돋보이는 예시 구성
+            </div>
+          </article>
+        </div>
+        <div class="bottom-grid">
+          <article class="card">
+            <div class="section-heading">
+              <h2> 분야별 오늘의 힌트 </h2> 
+              <span class="muted small"> 가볍게 읽어보세요 </span>
+            </div>
+            <div id="daily-hints" class="hint-list"></div>
+          </article>
+          <article class="action-card">
+            <span class="action-star" aria-hidden="true"> ✳ </span>
+            <h2> 생각하던 일에 <br> 딱 20분만 써보기. </h2>
+           <p> 작은 행동 하나가 하루의 분위기를 바꿀 수 있어요. </p>
+            <button id="action-toggle" class="button button-dark" aria-pressed="false"> 오늘의 실천 체크 <span aria-hidden="true"> ↗ </span> </button>
+            <span class="action-note"> 체크는 현재 페이지에서만 유지돼요. </span>
+          </article>
+        </div>
+      </section>
+
+
+
+
+
+      <footer>
+        <a class="brand footer-brand" href="./index.html"> 오늘의 결 <span class="brand-dot"> . </span> </a>
+        <p> 운세는 재미와 자기 성찰을 위한 콘텐츠예요. 오늘의 선택은 언제나 나에게 있어요. </p>
+        <span> © <span id="year"> </span> 오늘의 결 </span>
+      </footer>
+    </main>
+
+    <dialog id="profile-dialog" aria-labelledby="dialog-title">
+      <form id="profile-form">
+        <div class="dialog-heading">
+          <div>
+            <h2 id="dialog-title"> 나를 알아가는 첫걸음 </h2>
+          </div>
+          <button type="button" id="close-dialog" class="close-button" aria-label="입력 창 닫기"> × </button>
+        </div>
+        <p class="muted"> 정보는 서버로 전송하지 않아요. 같은 탭의 페이지 이동과 새로고침 동안 임시 보관해요. </p>
+        <div class="form-field">
+          <label for="birth-date"> 생년월일 </label>
+          <input type="date" id="birth-date" name="birthDate" required>
+        </div>
+        <fieldset>
+          <legend> 달력 구분 </legend>
+          <div class="radio-group">
+            <label> <input type="radio" name="calendar" value="solar" checked> 양력 </label> 
+            <label> <input type="radio" name="calendar" value="lunar"> 음력 </label>
+          </div>
+        </fieldset>
+        <label id="leap-field" class="checkbox-label" hidden>
+          <input type="checkbox" name="leapMonth"> 음력 윤달이에요
+        </label>
+        <div class="form-field">
+          <label for="birth-time"> 출생 시간 </label>
+          <input type="time" id="birth-time" name="birthTime" value="12:00" required>
+        </div>
+        <label class="checkbox-label">
+          <input type="checkbox" id="unknown-time" name="unknownTime"> 출생 시간을 몰라요
+        </label>
+        <p id="form-error" class="form-error" role="alert"></p>
+        <div class="info-note"> 현재는 입력 정보 표시만 반영해요. 운세·사주·성향은 동일한 예시 결과로 제공됩니다. </div>
+        <button type="submit" class="button button-dark submit-button"> 입력 정보 적용하고 예시 보기 <span aria-hidden="true"> ↗ </span> </button>
+      </form>
+    </dialog>
+  </body>
+</html>
+
