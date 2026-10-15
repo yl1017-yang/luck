@@ -26,6 +26,7 @@ const pageLabels = {
   'today-view': '오늘의 운세',
   'saju-view': '사주팔자',
   'personality-view': '내 성향',
+  'lifetime-view': '평생운세',
 };
 
 function updateDate() {
@@ -36,6 +37,7 @@ function updateDate() {
   const changed = displayedDateKey !== null && displayedDateKey !== nextDateKey;
   displayedDateKey = nextDateKey;
   if (changed) document.dispatchEvent(new CustomEvent('luck:date-change'));
+  document.dispatchEvent(new CustomEvent('luck:clock-tick'));
 }
 updateDate();
 setInterval(() => { updateDate(); datePicker.refresh(); }, 60000);

@@ -93,6 +93,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible {
 
 .navigation {
   display:flex;
+  flex-wrap:wrap;
   gap:8px;
 }
 
@@ -234,6 +235,50 @@ h1 {
   margin-top: 16px;
   line-height: 1.8;
   overflow-wrap: anywhere;
+}
+
+.annual-section {
+  margin-top: 24px;
+}
+
+.annual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.annual-card {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow-wrap: anywhere;
+}
+
+.annual-card h3 {
+  margin: 12px 0 8px;
+  font-size: 20px;
+  font-weight:700;
+}
+
+.annual-card h4 {
+  margin: 20px 0 10px;
+  font-size: 16px;
+}
+
+@media (max-width: 700px) {
+  .annual-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .navigation {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
 }
 
 .summary-grid {

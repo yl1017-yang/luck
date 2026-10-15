@@ -55,6 +55,43 @@ export function dayPillarForDate(dateKey) {
   return describePillar(engineSolar(date).getLunar().getDayInGanZhiExact2());
 }
 
+export function springBoundary(year) {
+  // Allow one additional year only to close the last supported annual interval.
+  if (!Number.isInteger(year) || year < 1900 || year > 2051) {
+    throw new RangeError('입춘 시각은 1900~2051년 범위에서 조회할 수 있어요.');
+  }
+  const term = Solar.fromYmd(year, 6, 1).getLunar().getJieQiTable()['立春'];
+  const instant = new Date(term.toYmdHms().replace(' ', 'T') + '+08:00');
+  const kstWall = new Date(instant.getTime() + 9 * 3600000).toISOString().slice(0, 19);
+  return { instant: instant.toISOString(), koreanTime: `${kstWall}+09:00` };
+}
+
+export function annualPillar(year) {
+  if (!Number.isInteger(year) || year < 1900 || year > 2050) {
+    throw new RangeError('연도별 흐름은 1900~2050년 범위에서 제공해요.');
+  }
+  return {
+    year,
+    pillar: describePillar(Solar.fromYmd(year, 7, 1).getLunar().getYearInGanZhiExact()),
+    start: springBoundary(year),
+    end: springBoundary(year + 1),
+  };
+}
+
+export function tenGodForStems(dayStem, otherStem) {
+  const day = STEMS.indexOf(dayStem);
+  const other = STEMS.indexOf(otherStem);
+  if (day < 0 || other < 0) throw new RangeError('올바른 천간을 지정해 주세요.');
+  const elements = ['wood', 'fire', 'earth', 'metal', 'water'];
+  const offset = (elements.indexOf(STEM_ELEMENTS[other]) - elements.indexOf(STEM_ELEMENTS[day]) + 5) % 5;
+  const samePolarity = day % 2 === other % 2;
+  const pairs = [
+    ['비견', '겁재'], ['식신', '상관'], ['편재', '정재'],
+    ['편관', '정관'], ['편인', '정인'],
+  ];
+  return pairs[offset][samePolarity ? 0 : 1];
+}
+
 export function calculateSaju(input, today) {
   const error = validateProfile(input, today);
   if (error) throw new RangeError(error);

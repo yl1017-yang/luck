@@ -116,6 +116,13 @@ try {
   await evaluate("document.querySelector('a[href=\"./saju.html\"]').click()");
   await waitFor("document.querySelector('#saju-status')?.textContent === '계산 완료'");
   assert.equal(await evaluate("document.querySelectorAll('#saju-explanations .card').length"), 6);
+  await evaluate("document.querySelector('a[href=\"./lifetime.html\"]').click()");
+  await waitFor("document.querySelectorAll('#annual-cards .annual-card').length === 5");
+  assert.equal(await evaluate("document.querySelectorAll('#lifetime-details .card').length"), 6);
+  assert.equal(await evaluate("document.querySelectorAll('.navigation a').length"), 4);
+  assert.ok((await evaluate("document.querySelector('#page-title').textContent")).includes('평생운세'));
+  await evaluate("document.querySelector('a[href=\"./saju.html\"]').click()");
+  await waitFor("document.querySelector('#saju-status')?.textContent === '계산 완료'");
 
   // Year-specific leap-month guidance and term-day uncertainty.
   await evaluate(`(() => {
@@ -189,11 +196,33 @@ try {
     form.requestSubmit();
   })()`);
 
-  for (const file of ['index.html', 'saju.html', 'personality.html']) {
+  await evaluate("document.querySelector('a[href=\"./lifetime.html\"]').click()");
+  await waitFor("document.querySelectorAll('#annual-cards .annual-card').length === 5");
+  await evaluate(`(() => {
+    const OriginalDate = Date;
+    window.qaOriginalDate = OriginalDate;
+    window.Date = class extends OriginalDate {
+      constructor(...args) { super(...(args.length ? args : ['2026-02-04T04:59:00+09:00'])); }
+      static now() { return new OriginalDate('2026-02-04T04:59:00+09:00').getTime(); }
+    };
+    document.dispatchEvent(new Event('visibilitychange'));
+  })()`);
+  assert.ok((await evaluate("document.querySelector('#annual-cards h3').textContent")).startsWith('2025년'));
+  await evaluate(`(() => {
+    const OriginalDate = window.qaOriginalDate;
+    window.Date = class extends OriginalDate {
+      constructor(...args) { super(...(args.length ? args : ['2026-02-04T05:04:00+09:00'])); }
+      static now() { return new OriginalDate('2026-02-04T05:04:00+09:00').getTime(); }
+    };
+    document.dispatchEvent(new Event('visibilitychange'));
+  })()`);
+  assert.ok((await evaluate("document.querySelector('#annual-cards h3').textContent")).startsWith('2026년'));
+  for (const file of ['index.html', 'saju.html', 'personality.html', 'lifetime.html']) {
     for (const width of [320, 360, 768, 1280]) {
       await call('Emulation.setDeviceMetricsOverride', { width, height: 950, deviceScaleFactor: 1, mobile: width < 500 });
       await call('Page.navigate', { url: `${base}/${file}` });
       await waitFor("document.querySelector('[name=birthYear]')?.options.length > 1");
+      assert.equal(await evaluate("document.querySelectorAll('.navigation [aria-current=page]').length"), 1);
       assert.equal(await evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1'), true, `${file} ${width}`);
       assert.equal(await evaluate(`(() => {
         const range = document.createRange();
@@ -202,6 +231,11 @@ try {
         return box.left >= 0 && box.right <= window.innerWidth;
       })()`), true, `${file} profile text ${width}`);
       if (width === 360 || width === 1280) await capture(`${file.replace('.html', '')}-${width}`);
+      if (file === 'lifetime.html' && (width === 360 || width === 1280)) {
+        await evaluate("document.querySelector('.annual-section').scrollIntoView()");
+        await capture(`lifetime-years-${width}`);
+        await evaluate('window.scrollTo(0, 0)');
+      }
       await evaluate("document.querySelector('#edit-profile').click()");
       assert.equal(await evaluate("document.querySelector('#profile-dialog').scrollWidth <= document.querySelector('#profile-dialog').clientWidth + 1"), true, `${file} dialog ${width}`);
       const dialogBox = await evaluate(`(() => {
@@ -217,6 +251,10 @@ try {
   }
 
   await evaluate("sessionStorage.clear()");
+  await call('Page.navigate', { url: `${base}/lifetime.html` });
+  await waitFor("document.querySelector('[name=birthYear]')?.options.length > 1");
+  assert.equal(await evaluate("document.querySelectorAll('#annual-cards .annual-card').length"), 0);
+  assert.equal(await evaluate("document.querySelector('#lifetime-status').textContent"), '정보 입력 대기');
   const injection = await call('Page.addScriptToEvaluateOnNewDocument', {
     source: "Storage.prototype.setItem = function () { throw new DOMException('Blocked', 'SecurityError'); };",
   });

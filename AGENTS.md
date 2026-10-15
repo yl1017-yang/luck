@@ -19,11 +19,14 @@
 | `index.html` | 오늘의 운세 |
 | `saju.html` | 사주팔자 |
 | `personality.html` | 내 성향 |
+| `lifetime.html` | 평생운세·연도별 세운 |
 | `css/style.css` | 공통 디자인과 반응형 스타일 |
 | `js/common.js` | 공통 출생 정보 입력·검증, 임시 보관, 날짜 표시 |
 | `js/today.js` | 오늘의 운세와 실천 체크 |
 | `js/saju.js` | 사주팔자 화면 출력 |
 | `js/personality.js` | 내 성향 화면 출력 |
+| `js/lifetime.js`, `js/lifetime-interpreter.js` | 평생운세 표시·조회 시각에 따른 구간 선택 |
+| `js/content/lifetime.js` | 오행별 인생 경향·천간 십성별 연도 해석 |
 | `js/render.js` | 공통 해석 카드 출력 |
 | `js/content/interpretations.js` | 일간별 해석·날짜별 주제·용어 설명 콘텐츠 |
 | `js/interpreter.js` | 계산 특징·날짜와 저장된 문구를 연결하는 순수 함수 |
@@ -32,7 +35,7 @@
 - 모든 메뉴를 한 HTML에 합쳐 해시(`#`)로 전환하는 방식으로 되돌리지 않는다. 본문 이동용 앵커는 사용할 수 있다.
 - 공통 동작은 `common.js`, 메뉴별 동작은 해당 페이지 스크립트에 둔다.
 - 각 스크립트가 자신의 페이지에 존재하는 DOM 요소만 사용하도록 한다.
-- 상단 메뉴·출생 정보·입력 대화상자는 각 HTML에 있으므로, 공통 마크업을 변경하면 세 페이지에 일관되게 반영한다.
+- 상단 메뉴·출생 정보·입력 대화상자는 각 HTML에 있으므로 공통 마크업을 변경하면 네 페이지에 일관되게 반영한다.
 - 계산 기능과 해석 선택 기능은 화면 처리와 분리한다. 실제 사주 계산은 `js/saju-calculator.js`, 한국 음력 변환은 `js/calendar.js`를 사용한다. `common.js`의 `onBirthResult`로 입력 직후와 저장 정보 복원 후 계산 결과를 구독한다.
 - GitHub Pages의 저장소 하위 경로를 고려해 `./css/style.css`, `./saju.html`처럼 상대 경로를 사용한다.
 
@@ -68,6 +71,7 @@
 - 만세력 도입 시 라이선스, 지원 범위, 음력·윤달·절기·날짜 경계·시간 미상 처리를 확인하고 기준 사례로 검증한다.
 - 해석은 재미와 자기 성찰을 위한 콘텐츠로 작성하고, 확정적 예측이나 불안을 유발하는 표현을 피한다.
 - 1차 범위는 오늘의 운세·사주팔자·내 성향이다. 평생운세는 이후 확장한다.
+- 평생운세 확장은 구현되어 있다. `doc/LIFETIME_GUIDE.md`를 따라 일간 기반 인생 경향과 입춘 기준 최대 5개 구간의 연도별 세운을 제공한다. 대운·시작 나이·순역·지지 합충은 포함하지 않는다. 성별 추가 입력 없이 천간 십성을 계산하며 생활 해석과 계산 사실을 구분한다.
 
 ## 실행·검증
 
@@ -93,4 +97,4 @@ node --experimental-default-type=module --check js/common.js
 - 검증하지 못한 항목을 완료했다고 기록하지 않는다.
 - 구조나 실행 방법을 바꾸면 README.md와 GUIDE.md를 갱신하고, 실제 완료된 작업만 IMPLEMENTATION_PLAN.md에 반영한다.
 
-1차 검수·콘텐츠 보강까지 완료했다. 결과와 제한은 `doc/FIRST_REVIEW.md`를 참고한다. 다음 계획은 평생운세 제공 범위 결정이다. 콘텐츠 변경 시 `tests/interpreter.test.mjs`를 확인하고, 입력·화면 변경 시 `tests/run-browser.py`로 로컬 Chrome 회귀 검수를 수행할 수 있다. 사용 중인 서버나 브라우저 프로필을 테스트용으로 재사용하지 않는다.
+1차 검수와 평생운세 확장까지 구현했다. 결과와 제한은 `doc/FIRST_REVIEW.md`, `doc/LIFETIME_GUIDE.md`를 참고한다. 콘텐츠 변경 시 interpreter·lifetime 테스트를 확인하고 입력·화면 변경 시 `tests/run-browser.py`로 로컬 Chrome 회귀 검수를 수행할 수 있다. 사용 중인 서버나 브라우저 프로필을 재사용하지 않는다.
