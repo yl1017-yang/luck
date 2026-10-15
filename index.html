@@ -38,11 +38,6 @@
         </div>
       </div>
 
-      <div class="demo-notice">
-        <span class="demo-tag"> PREVIEW </span>
-        <p> 현재는 화면 확인용 예시 결과예요. 입력한 생년월일로 실제 사주나 운세를 계산하지 않아요. </p>
-      </div>
-
       <section class="profile-bar" aria-label="출생 정보">
         <div class="profile-icon" aria-hidden="true"> ✦ </div>
         <div class="profile-copy">
@@ -59,41 +54,50 @@
           <article class="summary-card">
             <div class="summary-main">
               <span class="summary-icon" aria-hidden="true"> ✺ </span>
-              <div> <p> 오늘의 키워드 </p> <h2> 작은 시작 </h2> </div>
+              <div>
+                <p>오늘의 키워드</p>
+                <h2 id="daily-keyword">정보 입력 전</h2>
+              </div>
               <span class="card-arrow" aria-hidden="true"> ↗ </span>
             </div>
-            <div class="summary-foot">
-              완벽함보다 첫걸음이 필요한 날
+            <div id="daily-summary" class="summary-foot">
+              출생 정보를 입력해 주세요
             </div>
           </article>
           <article class="summary-card">
             <div class="summary-main">
               <span class="summary-icon" aria-hidden="true"> ♧ </span>
-              <div> <p> 나를 나타내는 일간 · 예시 </p> <h2> 갑목 <span> 甲木 </span> </h2> </div>
+              <div>
+                <p>나를 나타내는 일간</p>
+                <h2 id="daily-master">—</h2>
+              </div>
               <span class="card-arrow" aria-hidden="true"> ↗ </span>
             </div>
-            <div class="summary-foot mint"> 곧게 자라는 나무 같은 에너지 </div>
+            <div id="daily-master-symbol" class="summary-foot mint">입력 후 확인할 수 있어요</div>
           </article>
           <article class="summary-card">
             <div class="summary-main">
               <span class="summary-icon" aria-hidden="true"> ✧ </span>
-              <div> <p> 대표 성향 · 예시 </p> <h2> 꾸준한 개척가 </h2> </div>
+              <div>
+                <p>일간으로 살펴보는 성향</p>
+                <h2 id="daily-personality">—</h2>
+              </div>
               <span class="card-arrow" aria-hidden="true"> ↗ </span>
             </div>
-            <div class="summary-foot"> 새로운 길을 나만의 속도로 </div>
+            <div class="summary-foot">나를 돌아보는 자기 성찰용 해석</div>
           </article>
         </div>
         <div class="dashboard-grid content-grid">
           <article class="card daily-story">
             <div class="section-heading">
               <h2> 오늘의 흐름 </h2> 
-              <span class="badge"> 예시 해석 </span>
+              <span id="daily-date" class="badge">정보 입력 대기</span>
             </div>
             <div class="story-layout">
               <div>
-                <h3> 작게 시작해도, <br> 방향은 분명하게. </h3>
-                <p class="body-copy"> 오랫동안 생각만 했던 일이 있다면 오늘은 작은 첫걸음을 내디뎌 보세요. 모든 준비가 끝날 때까지 기다리기보다, 지금 할 수 있는 한 가지에 집중해 보는 거예요. </p>
-                <div class="story-note"> <span aria-hidden="true"> ↗ </span> 내 속도를 지키는 것이 오늘의 포인트 </div>
+                <h3 id="daily-title">나에게 맞는 오늘의 힌트</h3>
+                <p id="daily-intro" class="body-copy">출생 정보를 입력하면 날짜에 맞춘 생활 조언을 볼 수 있어요.</p>
+                <div id="daily-note" class="story-note">같은 입력과 날짜에는 같은 내용을 보여드려요.</div>
               </div>
               <div class="orbit-art" aria-hidden="true">
                 <div class="orbit orbit-one"></div>
@@ -107,48 +111,12 @@
           <article class="card elements-card">
             <div class="section-heading">
               <h2> 나의 오행 구성 </h2>
-              <span class="badge"> 예시 </span>
+              <span id="elements-status" class="badge">정보 입력 대기</span>
             </div>
-            <p class="muted small"> 목·화·토·금·수의 분포를 살펴보세요. </p>
-            <div class="element-chart" role="img" aria-label="예시 오행 분포: 목 3, 화 1, 토 2, 금 1, 수 1">
-              <div class="element-column">
-               <span> 3 </span>
-                <div class="bar-track">
-                  <div class="bar wood" style="--level:100%"></div>
-                </div>
-                <strong> 목 </strong>
-              </div>
-              <div class="element-column">
-                <span> 1 </span>
-                <div class="bar-track">
-                  <div class="bar fire" style="--level:33%"></div>
-                </div>
-                <strong> 화 </strong>
-              </div>
-              <div class="element-column">
-                <span> 2 </span>
-                <div class="bar-track">
-                  <div class="bar earth" style="--level:66%"></div>
-                </div>
-                <strong> 토 </strong>
-              </div>
-              <div class="element-column">
-                <span> 1 </span>
-                <div class="bar-track">
-                  <div class="bar metal" style="--level:33%"></div>
-                </div>
-                <strong> 금 </strong>
-              </div>
-              <div class="element-column">
-                <span> 1 </span>
-                <div class="bar-track">
-                  <div class="bar water" style="--level:33%"></div>
-                </div>
-                <strong> 수 </strong>
-              </div>
-            </div>
+            <p class="muted small">확정된 천간·지지의 단순 개수이며 강약 점수는 아니에요.</p>
+            <div id="element-chart" class="element-chart" role="img" aria-label="출생 정보 입력 전, 오행 구성 없음"></div>
             <div class="chart-note">
-              <span class="legend-dot"></span> 목의 기운이 돋보이는 예시 구성
+              <span id="elements-note">출생 정보를 입력하면 확인할 수 있어요.</span>
             </div>
           </article>
         </div>
@@ -162,17 +130,15 @@
           </article>
           <article class="card card-lime action-card">
             <span class="action-star" aria-hidden="true"> ✳ </span>
-            <h2> 생각하던 일에 <br> 딱 20분만 써보기. </h2>
-           <p> 작은 행동 하나가 하루의 분위기를 바꿀 수 있어요. </p>
-            <button id="action-toggle" class="button button-dark button-full" aria-pressed="false"> 오늘의 실천 체크 <span aria-hidden="true"> ↗ </span> </button>
+            <h2 id="daily-action-title">오늘의 작은 실천</h2>
+            <p id="daily-action-text">출생 정보 입력 후 오늘의 제안을 확인해 보세요.</p>
+            <button id="action-toggle" class="button button-dark button-full" aria-pressed="false" disabled>오늘의 실천 체크</button>
             <span class="action-note"> 체크는 현재 페이지에서만 유지돼요. </span>
           </article>
         </div>
+        <p id="daily-explanation" class="muted small interpretation-note" role="status">오늘의 운세는 날짜별로 고르는 생활 제안이에요.</p>
+        <p id="daily-coverage" class="muted small interpretation-note"></p>
       </section>
-
-
-
-
 
       <footer>
         <a class="brand footer-brand" href="./index.html"> 오늘의 결 <span class="brand-dot"> . </span> </a>
@@ -181,6 +147,7 @@
       </footer>
     </main>
 
+    <!-- 정보입력 팝업 -->
     <dialog id="profile-dialog" aria-labelledby="dialog-title">
       <form id="profile-form">
         <div class="dialog-heading">
@@ -191,31 +158,48 @@
         </div>
         <p class="muted"> 정보는 서버로 전송하지 않아요. 같은 탭의 페이지 이동과 새로고침 동안 임시 보관해요. </p>
         <div class="form-field">
-          <label for="birth-date"> 생년월일 </label>
-          <input class="form-input" type="date" id="birth-date" name="birthDate" required>
+          <label for="display-name"> 이름 또는 별명 <span class="muted small">(선택)</span> </label>
+          <input class="form-input" type="text" id="display-name" name="displayName" maxlength="20" placeholder="어떻게 불러드릴까요?" autocomplete="nickname">
+        </div>
+        <div class="form-field">
+          <span id="birth-date-label" class="form-label">생년월일</span>
+          <div class="date-selects" role="group" aria-labelledby="birth-date-label" aria-describedby="birth-date-help">
+            <select class="form-input" name="birthYear" aria-label="출생 연도" required>
+              <option value="" disabled selected>년</option>
+            </select>
+            <select class="form-input" name="birthMonth" aria-label="출생 월" required disabled>
+              <option value="" disabled selected>월</option>
+            </select>
+            <select class="form-input" name="birthDay" aria-label="출생 일" required disabled>
+              <option value="" disabled selected>일</option>
+            </select>
+          </div>
+          <p id="birth-date-help" class="muted small">1900년부터 오늘까지, 실제로 존재하는 날짜만 선택할 수 있어요.</p>
         </div>
         <fieldset>
           <legend> 달력 구분 </legend>
           <div class="radio-group">
             <label> <input type="radio" name="calendar" value="solar" checked> 양력 </label> 
             <label> <input type="radio" name="calendar" value="lunar"> 음력 </label>
+            <label id="leap-field" class="checkbox-label" hidden>
+              <input type="checkbox" name="leapMonth"> 음력 윤달이에요
+            </label>
           </div>
         </fieldset>
-        <label id="leap-field" class="checkbox-label" hidden>
-          <input type="checkbox" name="leapMonth"> 음력 윤달이에요
-        </label>
         <div class="form-field">
           <label for="birth-time"> 출생 시간 </label>
-          <input class="form-input" type="time" id="birth-time" name="birthTime" value="12:00" required>
+          <input class="form-input" type="time" id="birth-time" name="birthTime" step="60" required>
         </div>
         <label class="checkbox-label">
           <input type="checkbox" id="unknown-time" name="unknownTime"> 출생 시간을 몰라요
         </label>
+        <div class="info-note">한국 출생·표준시(UTC+9) 기준으로 준비하고 있어요. 해외 출생과 과거 서머타임·표준시 변경, 출생지별 태양시 보정은 지원하지 않아요. 시간을 모르면 임의로 추정하지 않아요. 오늘의 운세는 한국 시간 자정 기준이에요.</div>
         <p id="form-error" class="form-error" role="alert"></p>
-        <div class="info-note"> 현재는 입력 정보 표시만 반영해요. 운세·사주·성향은 동일한 예시 결과로 제공됩니다. </div>
-        <button type="submit" class="button button-dark button-full submit-button"> 입력 정보 적용하고 예시 보기 <span aria-hidden="true"> ↗ </span> </button>
+        <button type="submit" class="button button-dark button-full submit-button"> 결과 보기 <span aria-hidden="true"> ↗ </span> </button>
       </form>
     </dialog>
+    <!-- //정보입력 팝업 -->
+
   </body>
 </html>
 

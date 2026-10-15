@@ -38,11 +38,6 @@
         </div>
       </div>
 
-      <div class="demo-notice">
-        <span class="demo-tag"> PREVIEW </span>
-        <p> 현재는 화면 확인용 예시 결과예요. 입력한 생년월일로 실제 사주나 운세를 계산하지 않아요. </p>
-      </div>
-
       <section class="profile-bar" aria-label="출생 정보">
         <div class="profile-icon" aria-hidden="true"> ✦ </div>
         <div class="profile-copy">
@@ -61,16 +56,15 @@
       <section id="personality-view" class="view" aria-labelledby="page-title">
         <article class="card personality-hero">
           <div>
-            <span class="badge"> 예시 성향 </span>
-            <h2> 나만의 길을 만드는 <br> 꾸준한 개척가. </h2>
-            <p class="body-copy"> 스스로 방향을 정하고 한 걸음씩 나아가는 사람. 새로운 시도를 즐기면서도, 의미 있다고 느끼는 일에는 오래 집중하는 모습을 예시로 담았어요. </p>
-            <div class="trait-tags">
-              <span> 주도적인 </span> <span> 성장하는 </span> <span> 꾸준한 </span>
-            </div>
+            <span id="personality-status" class="badge">정보 입력 대기</span>
+            <h2 id="personality-title">나를 알아가는 작은 힌트</h2>
+            <p id="personality-intro" class="body-copy">출생 정보를 입력하면 일간의 이미지에 맞춘 자기 성찰용 설명을 볼 수 있어요.</p>
+            <div id="personality-tags" class="trait-tags"></div>
           </div>
           <span class="personality-art" aria-hidden="true">✳</span>
         </article>
         <div id="personality-details" class="explanation-grid"></div>
+        <p id="personality-note" class="muted small interpretation-note" role="status">과학적인 성격 진단이 아닌, 나를 돌아보기 위한 콘텐츠예요.</p>
       </section>
 
       <footer>
@@ -90,29 +84,44 @@
         </div>
         <p class="muted"> 정보는 서버로 전송하지 않아요. 같은 탭의 페이지 이동과 새로고침 동안 임시 보관해요. </p>
         <div class="form-field">
-          <label for="birth-date"> 생년월일 </label>
-          <input class="form-input" type="date" id="birth-date" name="birthDate" required>
+          <label for="display-name"> 이름 또는 별명 <span class="muted small">(선택)</span> </label>
+          <input class="form-input" type="text" id="display-name" name="displayName" maxlength="20" placeholder="어떻게 불러드릴까요?" autocomplete="nickname">
+        </div>
+        <div class="form-field">
+          <span id="birth-date-label" class="form-label">생년월일</span>
+          <div class="date-selects" role="group" aria-labelledby="birth-date-label" aria-describedby="birth-date-help">
+            <select class="form-input" name="birthYear" aria-label="출생 연도" required>
+              <option value="" disabled selected>년</option>
+            </select>
+            <select class="form-input" name="birthMonth" aria-label="출생 월" required disabled>
+              <option value="" disabled selected>월</option>
+            </select>
+            <select class="form-input" name="birthDay" aria-label="출생 일" required disabled>
+              <option value="" disabled selected>일</option>
+            </select>
+          </div>
+          <p id="birth-date-help" class="muted small">1900년부터 오늘까지, 실제로 존재하는 날짜만 선택할 수 있어요.</p>
         </div>
         <fieldset>
           <legend> 달력 구분 </legend>
           <div class="radio-group">
             <label> <input type="radio" name="calendar" value="solar" checked> 양력 </label> 
             <label> <input type="radio" name="calendar" value="lunar"> 음력 </label>
+            <label id="leap-field" class="checkbox-label" hidden>
+              <input type="checkbox" name="leapMonth"> 음력 윤달이에요
+            </label>
           </div>
         </fieldset>
-        <label id="leap-field" class="checkbox-label" hidden>
-          <input type="checkbox" name="leapMonth"> 음력 윤달이에요
-        </label>
         <div class="form-field">
           <label for="birth-time"> 출생 시간 </label>
-          <input class="form-input" type="time" id="birth-time" name="birthTime" value="12:00" required>
+          <input class="form-input" type="time" id="birth-time" name="birthTime" step="60" required>
         </div>
         <label class="checkbox-label">
           <input type="checkbox" id="unknown-time" name="unknownTime"> 출생 시간을 몰라요
         </label>
+        <div class="info-note">한국 출생·표준시(UTC+9) 기준으로 준비하고 있어요. 해외 출생과 과거 서머타임·표준시 변경, 출생지별 태양시 보정은 지원하지 않아요. 시간을 모르면 임의로 추정하지 않아요. 오늘의 운세는 한국 시간 자정 기준이에요.</div>
         <p id="form-error" class="form-error" role="alert"></p>
-        <div class="info-note"> 현재는 입력 정보 표시만 반영해요. 운세·사주·성향은 동일한 예시 결과로 제공됩니다. </div>
-        <button type="submit" class="button button-dark button-full submit-button"> 입력 정보 적용하고 예시 보기 <span aria-hidden="true"> ↗ </span> </button>
+        <button type="submit" class="button button-dark button-full submit-button"> 결과 보기 <span aria-hidden="true"> ↗ </span> </button>
       </form>
     </dialog>
   </body>
