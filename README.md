@@ -1,6 +1,8 @@
 # 오늘의 결
 
-HTML·CSS·바닐라 JavaScript로 만든 운세 대시보드입니다. 검정 상단 메뉴, 최대 너비 1200px, 라임·민트 강조색을 사용합니다.
+사이트: [https://yl1017-yang.github.io/luck/](https://yl1017-yang.github.io/luck/)
+
+HTML·CSS·바닐라 JavaScript로 만든 운세 대시보드입니다. 
 
 ## 현재 구현 범위
 
