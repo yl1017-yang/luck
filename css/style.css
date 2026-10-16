@@ -54,6 +54,16 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible {
   display:none!important;
 }
 
+h1 {
+  overflow-wrap: anywhere;
+  font-size:34px;
+  font-weight:800;
+  margin:0 0 2px;
+}
+h2, h3{font-weight:800;}
+h4, h5{font-weight:600;}
+h6 {font:inherit;}
+
 .container {
   width:calc(100% - 40px);
   max-width:1200px;
@@ -131,13 +141,6 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible {
   justify-content:space-between;
   gap:20px;
   margin-bottom:24px;
-}
-
-h1 {
-  overflow-wrap: anywhere;
-  font-size:34px;
-  font-weight:800;
-  margin:0 0 2px;
 }
 
 .muted {
@@ -239,6 +242,83 @@ h1 {
 
 .annual-section {
   margin-top: 24px;
+}
+
+.fortune-detail {
+  margin-top: 24px;
+  scroll-margin-top: 24px;
+}
+
+.fortune-detail .card {
+  margin-bottom: 20px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.fortune-detail h3,
+.fortune-detail h4,
+.fortune-detail h5,
+.fortune-detail h6 {
+  margin: 22px 0 12px;
+}
+
+.fortune-detail h3 {
+  font-size: 22px;
+}
+
+.fortune-detail h2 {
+  font-size: 26px;
+}
+
+.fortune-detail h4,
+.fortune-detail h5 {
+  font-size: 20px;
+}
+
+.fortune-detail h6 {
+  font-size: 18px;
+}
+
+.fortune-cycles,
+.fortune-months {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.fortune-cycle {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  white-space: normal;
+  min-width: 0;
+  gap: 8px;
+}
+
+.fortune-detail [aria-pressed="true"] {
+  background: var(--lime, #d8ef99);
+  color: #151713;
+  border-color: #151713;
+}
+
+.fortune-months .button {
+  flex: 1 0 40px;
+}
+
+.fortune-basis {
+  margin-top: 20px;
+  line-height: 1.8;
+}
+
+.fortune-basis summary {
+  cursor: pointer;
+}
+
+.fortune-month-segment {
+  margin-top: 20px;
 }
 
 .annual-grid {
@@ -362,7 +442,7 @@ h1 {
 .card {
   background:white;
   border-radius:var(--radius);
-  padding:24px;
+  padding:20px 24px;
 }
 
 .section-heading {
@@ -376,7 +456,6 @@ h1 {
 .section-heading h2 {
   font-size:18px;
   margin:0;
-  font-weight:800;
 }
 
 .badge {
@@ -401,7 +480,6 @@ h1 {
 
 .daily-story h3 {
   font-size:32px;
-  font-weight:800;
   line-height:1.4;
   margin-bottom:16px;
 }
@@ -719,8 +797,7 @@ h1 {
 .explanation-grid p {
   color:#747b6c;
   font-size:15px;
-  line-height:1.9;
-  margin-bottom:0;
+  line-height:1.5;
 }
 
 .explanation-number {
@@ -739,7 +816,6 @@ h1 {
 
 .personality-hero h2 {
   font-size:36px;
-  font-weight:800;
   margin:15px 0;
 }
 

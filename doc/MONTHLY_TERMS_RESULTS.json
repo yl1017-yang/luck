@@ -1,0 +1,266 @@
+{
+  "checkedOn": "2026-10-16",
+  "count": 36,
+  "precision": "minute",
+  "toleranceSeconds": 60,
+  "maxAbsoluteSeconds": 28,
+  "sources": [
+    "https://astro.kasi.re.kr/kor/life/post/calendarData?search_year=2024",
+    "https://astro.kasi.re.kr/kor/life/post/calendarData?search_year=2025",
+    "https://astro.kasi.re.kr/kor/life/post/calendarData?search_year=2026"
+  ],
+  "rows": [
+    {
+      "year": 2024,
+      "term": "소한",
+      "referenceKst": "2024-01-06T05:49:00+09:00",
+      "actualUtc": "2024-01-05T20:49:22.000Z",
+      "differenceSeconds": 22
+    },
+    {
+      "year": 2024,
+      "term": "입춘",
+      "referenceKst": "2024-02-04T17:27:00+09:00",
+      "actualUtc": "2024-02-04T08:27:07.000Z",
+      "differenceSeconds": 7
+    },
+    {
+      "year": 2024,
+      "term": "경칩",
+      "referenceKst": "2024-03-05T11:23:00+09:00",
+      "actualUtc": "2024-03-05T02:22:45.000Z",
+      "differenceSeconds": -15
+    },
+    {
+      "year": 2024,
+      "term": "청명",
+      "referenceKst": "2024-04-04T16:02:00+09:00",
+      "actualUtc": "2024-04-04T07:02:17.000Z",
+      "differenceSeconds": 17
+    },
+    {
+      "year": 2024,
+      "term": "입하",
+      "referenceKst": "2024-05-05T09:10:00+09:00",
+      "actualUtc": "2024-05-05T00:10:05.000Z",
+      "differenceSeconds": 5
+    },
+    {
+      "year": 2024,
+      "term": "망종",
+      "referenceKst": "2024-06-05T13:10:00+09:00",
+      "actualUtc": "2024-06-05T04:09:54.000Z",
+      "differenceSeconds": -6
+    },
+    {
+      "year": 2024,
+      "term": "소서",
+      "referenceKst": "2024-07-06T23:20:00+09:00",
+      "actualUtc": "2024-07-06T14:20:03.000Z",
+      "differenceSeconds": 3
+    },
+    {
+      "year": 2024,
+      "term": "입추",
+      "referenceKst": "2024-08-07T09:09:00+09:00",
+      "actualUtc": "2024-08-07T00:09:16.000Z",
+      "differenceSeconds": 16
+    },
+    {
+      "year": 2024,
+      "term": "백로",
+      "referenceKst": "2024-09-07T12:11:00+09:00",
+      "actualUtc": "2024-09-07T03:11:20.000Z",
+      "differenceSeconds": 20
+    },
+    {
+      "year": 2024,
+      "term": "한로",
+      "referenceKst": "2024-10-08T04:00:00+09:00",
+      "actualUtc": "2024-10-07T18:59:57.000Z",
+      "differenceSeconds": -3
+    },
+    {
+      "year": 2024,
+      "term": "입동",
+      "referenceKst": "2024-11-07T07:20:00+09:00",
+      "actualUtc": "2024-11-06T22:20:04.000Z",
+      "differenceSeconds": 4
+    },
+    {
+      "year": 2024,
+      "term": "대설",
+      "referenceKst": "2024-12-07T00:17:00+09:00",
+      "actualUtc": "2024-12-06T15:17:03.000Z",
+      "differenceSeconds": 3
+    },
+    {
+      "year": 2025,
+      "term": "소한",
+      "referenceKst": "2025-01-05T11:33:00+09:00",
+      "actualUtc": "2025-01-05T02:32:47.000Z",
+      "differenceSeconds": -13
+    },
+    {
+      "year": 2025,
+      "term": "입춘",
+      "referenceKst": "2025-02-03T23:10:00+09:00",
+      "actualUtc": "2025-02-03T14:10:28.000Z",
+      "differenceSeconds": 28
+    },
+    {
+      "year": 2025,
+      "term": "경칩",
+      "referenceKst": "2025-03-05T17:07:00+09:00",
+      "actualUtc": "2025-03-05T08:07:18.000Z",
+      "differenceSeconds": 18
+    },
+    {
+      "year": 2025,
+      "term": "청명",
+      "referenceKst": "2025-04-04T21:49:00+09:00",
+      "actualUtc": "2025-04-04T12:48:36.000Z",
+      "differenceSeconds": -24
+    },
+    {
+      "year": 2025,
+      "term": "입하",
+      "referenceKst": "2025-05-05T14:57:00+09:00",
+      "actualUtc": "2025-05-05T05:57:13.000Z",
+      "differenceSeconds": 13
+    },
+    {
+      "year": 2025,
+      "term": "망종",
+      "referenceKst": "2025-06-05T18:57:00+09:00",
+      "actualUtc": "2025-06-05T09:56:32.000Z",
+      "differenceSeconds": -28
+    },
+    {
+      "year": 2025,
+      "term": "소서",
+      "referenceKst": "2025-07-07T05:05:00+09:00",
+      "actualUtc": "2025-07-06T20:04:59.000Z",
+      "differenceSeconds": -1
+    },
+    {
+      "year": 2025,
+      "term": "입추",
+      "referenceKst": "2025-08-07T14:52:00+09:00",
+      "actualUtc": "2025-08-07T05:51:35.000Z",
+      "differenceSeconds": -25
+    },
+    {
+      "year": 2025,
+      "term": "백로",
+      "referenceKst": "2025-09-07T17:52:00+09:00",
+      "actualUtc": "2025-09-07T08:51:57.000Z",
+      "differenceSeconds": -3
+    },
+    {
+      "year": 2025,
+      "term": "한로",
+      "referenceKst": "2025-10-08T09:41:00+09:00",
+      "actualUtc": "2025-10-08T00:41:13.000Z",
+      "differenceSeconds": 13
+    },
+    {
+      "year": 2025,
+      "term": "입동",
+      "referenceKst": "2025-11-07T13:04:00+09:00",
+      "actualUtc": "2025-11-07T04:04:04.000Z",
+      "differenceSeconds": 4
+    },
+    {
+      "year": 2025,
+      "term": "대설",
+      "referenceKst": "2025-12-07T06:05:00+09:00",
+      "actualUtc": "2025-12-06T21:04:37.000Z",
+      "differenceSeconds": -23
+    },
+    {
+      "year": 2026,
+      "term": "소한",
+      "referenceKst": "2026-01-05T17:23:00+09:00",
+      "actualUtc": "2026-01-05T08:23:10.000Z",
+      "differenceSeconds": 10
+    },
+    {
+      "year": 2026,
+      "term": "입춘",
+      "referenceKst": "2026-02-04T05:02:00+09:00",
+      "actualUtc": "2026-02-03T20:02:08.000Z",
+      "differenceSeconds": 8
+    },
+    {
+      "year": 2026,
+      "term": "경칩",
+      "referenceKst": "2026-03-05T22:59:00+09:00",
+      "actualUtc": "2026-03-05T13:59:00.000Z",
+      "differenceSeconds": 0
+    },
+    {
+      "year": 2026,
+      "term": "청명",
+      "referenceKst": "2026-04-05T03:40:00+09:00",
+      "actualUtc": "2026-04-04T18:40:00.000Z",
+      "differenceSeconds": 0
+    },
+    {
+      "year": 2026,
+      "term": "입하",
+      "referenceKst": "2026-05-05T20:49:00+09:00",
+      "actualUtc": "2026-05-05T11:48:44.000Z",
+      "differenceSeconds": -16
+    },
+    {
+      "year": 2026,
+      "term": "망종",
+      "referenceKst": "2026-06-06T00:48:00+09:00",
+      "actualUtc": "2026-06-05T15:48:21.000Z",
+      "differenceSeconds": 21
+    },
+    {
+      "year": 2026,
+      "term": "소서",
+      "referenceKst": "2026-07-07T10:57:00+09:00",
+      "actualUtc": "2026-07-07T01:56:57.000Z",
+      "differenceSeconds": -3
+    },
+    {
+      "year": 2026,
+      "term": "입추",
+      "referenceKst": "2026-08-07T20:43:00+09:00",
+      "actualUtc": "2026-08-07T11:42:43.000Z",
+      "differenceSeconds": -17
+    },
+    {
+      "year": 2026,
+      "term": "백로",
+      "referenceKst": "2026-09-07T23:41:00+09:00",
+      "actualUtc": "2026-09-07T14:41:16.000Z",
+      "differenceSeconds": 16
+    },
+    {
+      "year": 2026,
+      "term": "한로",
+      "referenceKst": "2026-10-08T15:29:00+09:00",
+      "actualUtc": "2026-10-08T06:29:17.000Z",
+      "differenceSeconds": 17
+    },
+    {
+      "year": 2026,
+      "term": "입동",
+      "referenceKst": "2026-11-07T18:52:00+09:00",
+      "actualUtc": "2026-11-07T09:52:05.000Z",
+      "differenceSeconds": 5
+    },
+    {
+      "year": 2026,
+      "term": "대설",
+      "referenceKst": "2026-12-07T11:53:00+09:00",
+      "actualUtc": "2026-12-07T02:52:32.000Z",
+      "differenceSeconds": -28
+    }
+  ]
+}

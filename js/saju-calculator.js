@@ -32,7 +32,7 @@ function pillarsAt(kst) {
   };
 }
 
-function describePillar(hanja) {
+export function describePillar(hanja) {
   if (!hanja) return null;
   const stem = STEMS.indexOf(hanja[0]);
   const branch = BRANCHES.indexOf(hanja[1]);

@@ -1,8 +1,10 @@
 import { onBirthResult } from './common.js';
 import { interpretLifetime } from './lifetime-interpreter.js';
 import { renderCards } from './render.js';
+import { createFortuneView } from './fortune-view.js';
 
 const $ = (selector) => document.querySelector(selector);
+const fortuneView = createFortuneView();
 let currentResult = null;
 let renderedResult;
 let renderedCycle;
@@ -57,6 +59,13 @@ function renderLifetime() {
     action.className = 'info-note';
     action.textContent = year.reading.action;
     card.append(badge, title, period, topic, text, action);
+    const detail = document.createElement('button');
+    detail.type = 'button';
+    detail.className = 'button button-outline';
+    detail.textContent = year.year < 1901 ? '상세는 1901년부터 제공해요' : `${year.year}년 상세 보기`;
+    detail.disabled = year.year < 1901;
+    detail.addEventListener('click', () => fortuneView.open(year.year));
+    card.append(detail);
     $('#annual-cards').append(card);
   }
 }
@@ -64,5 +73,6 @@ function renderLifetime() {
 onBirthResult((result) => {
   currentResult = result;
   renderLifetime();
+  fortuneView.update(result);
 });
 document.addEventListener('luck:clock-tick', renderLifetime);

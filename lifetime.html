@@ -74,6 +74,34 @@
           <p id="annual-note" class="muted small">출생 정보를 입력하면 올해부터 이어지는 세운의 간지와 생활 주제를 확인할 수 있어요.</p>
           <div id="annual-cards" class="annual-grid"></div>
         </article>
+        <section id="annual-detail" class="fortune-detail" aria-labelledby="fortune-title">
+          <div class="card">
+            <h2 id="fortune-title">분야별 운세·월운</h2>
+            <p class="body-copy">양력 연도를 고르고, 입춘 전후의 세운과 월별 생활 주제를 살펴보세요.</p>
+            <div class="form-field">
+              <label for="fortune-year">조회 연도 (양력)</label>
+              <select id="fortune-year" class="form-input" aria-describedby="fortune-status" disabled>
+                <option value="">출생 정보 입력 후 선택</option>
+              </select>
+            </div>
+            <p id="fortune-status" class="info-note" role="status">출생 정보를 입력해 주세요.</p>
+          </div>
+          <div id="fortune-content" hidden>
+            <div class="card">
+              <h3>적용 세운 선택</h3>
+              <p class="muted">입춘을 기준으로 세운이 바뀌어요. 아래 기간은 선택 연도와 출생일 이후에 해당하는 범위예요.</p>
+              <div id="fortune-cycles" class="fortune-cycles" role="group" aria-label="적용 세운 선택"></div>
+              <p id="fortune-note" class="muted small"></p>
+            </div>
+            <div id="fortune-areas" class="fortune-areas"></div>
+            <section class="card fortune-monthly" aria-labelledby="fortune-month-title">
+              <h3 id="fortune-month-title">월별 운세(월운)</h3>
+              <p class="body-copy">양력 1~12월을 절기 전후로 나누어 보여드려요. 월운의 세운 기준은 각 기간에 따라 정해지며 위 세운 선택과 별개예요.</p>
+              <div id="fortune-months" class="fortune-months" role="group" aria-label="조회 월 선택"></div>
+              <div id="fortune-month-content" role="region" aria-label="선택 월 풀이"></div>
+            </section>
+          </div>
+        </section>
       </section>
 
       <footer>

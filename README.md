@@ -12,7 +12,7 @@ HTML·CSS·바닐라 JavaScript로 만든 운세 대시보드입니다.
 - 입력 정보 수정, 오늘의 실천 체크, 한국 시간 기준 날짜 표시
 - 모바일 대응과 키보드 접근 가능한 입력 대화상자
 
-**네 메뉴를 실제 입력과 저장된 해석 콘텐츠에 연결했습니다.** 사주팔자는 계산된 네 기둥·일간·오행 개수와 기본 설명, 내 성향은 일간 10종별 다섯 영역의 설명을 제공합니다. 평생운세는 인생 전반의 여섯 영역과 최대 5개 연도의 세운을 제공합니다. 오늘의 운세는 날짜와 출생 정보로 생활 조언을 선택하며 실제 사건의 길흉을 예측하지 않습니다. 입력 전에는 개인별 결과를 표시하지 않습니다. 양력·음력 변환은 korean-lunar-calendar 0.4.0, 사주 계산은 lunar-javascript 1.7.7에 한국 시간·자정 기준을 보정해 사용합니다. 시간 미상과 절입 경계의 불확실한 기둥은 제외합니다. 출생 정보는 서버로 전송하지 않고 sessionStorage에 임시 보관하며, 같은 탭에서 이동·새로고침하면 다시 계산합니다. 실천 체크는 현재 페이지의 입력·날짜·행동에만 적용됩니다.
+**네 메뉴를 실제 입력과 저장된 해석 콘텐츠에 연결했습니다.** 사주팔자는 계산된 네 기둥·일간·오행 개수와 기본 설명, 내 성향은 일간 10종별 다섯 영역의 설명을 제공합니다. 평생운세는 인생 전반의 여섯 영역과 최대 5개 연도의 세운, 선택 연도의 분야별 상세와 12개월 월운을 제공합니다. 오늘의 운세는 날짜와 출생 정보로 생활 조언을 선택하며 실제 사건의 길흉을 예측하지 않습니다. 입력 전에는 개인별 결과를 표시하지 않습니다. 양력·음력 변환은 korean-lunar-calendar 0.4.0, 사주 계산은 lunar-javascript 1.7.7에 한국 시간·자정 기준을 보정해 사용합니다. 시간 미상과 절입 경계의 불확실한 기둥은 제외합니다. 출생 정보는 서버로 전송하지 않고 sessionStorage에 임시 보관하며, 같은 탭에서 이동·새로고침하면 다시 계산합니다. 실천 체크는 현재 페이지의 입력·날짜·행동에만 적용됩니다.
 
 ## 로컬 실행
 
@@ -40,6 +40,8 @@ ES 모듈을 사용하므로 HTML 파일을 직접 여는 대신 개발 서버�
 - `js/profile.js`: 공통 입력 정책·정규화·양력 날짜 검증·한국 날짜 키
 - `js/calendar.js`: 음력·양력 변환 어댑터
 - `js/saju-calculator.js`: 실제 사주 계산·일간·오행 개수·불확실성 공통 결과
+- `js/fortune-periods.js`: 연간 상세·월운의 세운/절기 월/양력 월 기간 계산(평생운세 화면 연결 완료). [구현·검증 기록](./doc/FORTUNE_PERIODS_VALIDATION.md)
+- `js/fortune-interpreter.js`, `js/content/annual-details.js`, `js/content/monthly-details.js`: 분야별 연간 상세 50개·월간 10종·연간/월간 연결 100조합과 선택 규칙(평생운세 화면 연결 완료). [콘텐츠 검수 기록](./doc/DETAILED_FORTUNE_CONTENT_VALIDATION.md)
 - `js/vendor/lunar-javascript/`: MIT 고지와 ESM 엔진(UMD 포장만 변환)
 - `js/date-picker.js`, `js/date-options.js`: 공통 연·월·일 선택 UI와 달력별 유효 날짜 선택지
 - `js/vendor/korean-lunar-calendar/`: 버전 고정 배포 파일·라이선스·출처
@@ -48,6 +50,7 @@ ES 모듈을 사용하므로 HTML 파일을 직접 여는 대신 개발 서버�
 - `js/saju.js`: 사주팔자 화면
 - `js/personality.js`: 내 성향 화면
 - `js/lifetime.js`, `js/lifetime-interpreter.js`: 평생운세 화면과 연도별 해석 선택
+- `js/fortune-view.js`, `js/fortune-view-state.js`: 분야별 상세·12개월 월운 화면, 연도/세운/월 선택과 임시 복원
 - `js/content/lifetime.js`: 인생 경향·십성별 생활 주제
 - `js/render.js`: 공통 해석 카드 출력
 - `js/content/interpretations.js`: 일간 10종·주제 8종·실천 팁 24종과 기본 설명
@@ -65,37 +68,41 @@ ES 모듈을 사용하므로 HTML 파일을 직접 여는 대신 개발 서버�
 달력 검증 실행:
 
 ```powershell
-node --experimental-default-type=module tests/calendar.test.mjs
+node tests/calendar.test.mjs
 ```
 
 사주 후보 검증(사이트에 미연결인 검증용 어댑터):
 
 ```powershell
-node --experimental-default-type=module tests/saju-candidates.test.mjs
+node tests/saju-candidates.test.mjs
 ```
 
 실제 계산 모듈 검증:
 
 ```powershell
-node --experimental-default-type=module tests/saju-calculator.test.mjs
+node tests/saju-calculator.test.mjs
 ```
 
 해석 선택 검증:
 
 ```powershell
-node --experimental-default-type=module tests/interpreter.test.mjs
+node tests/interpreter.test.mjs
 ```
 
-로컬 Chrome 통합 검수(Windows, Python, Node 22 필요):
+로컬 Chrome 통합 검수(Windows, Chrome, Node 22 이상):
 
 ```powershell
-python tests/run-browser.py
+node tests/run-browser.mjs
 ```
 
 콘텐츠 1.1.0은 8개 주제별 3종의 상세 설명과 실천 팁을 제공하며, 동일 주제가 돌아오는 날에는 다른 설명을 선택합니다.
 
+분야별 상세·월운 화면 연결은 12단계에서 완료했습니다. 사주팔자의 ‘분야별 운세·월운 보기’ 또는 평생운세의 연도 카드 ‘상세 보기’로 진입합니다. 선택 연도와 세운·월은 같은 탭에서 복원됩니다. [화면 검수 결과](./doc/DETAILED_FORTUNE_UI_VALIDATION.md)에 구현 범위·검사 결과·제한을 기록했습니다.
+
+13단계 종합 검증도 완료했습니다. 전체 테스트 63개와 Chrome 검사를 통과했으며, KASI 월 경계 시각 36건의 최대 차이는 28초였습니다. 150개 연도의 구간 생성 검사는 독립 시각 전수 대조와 구분합니다. [종합 검증 보고서](./doc/DETAILED_FORTUNE_FINAL_REVIEW.md)에서 출처·정밀도·검증 범위·남은 한계를 확인할 수 있습니다.
+
 평생운세는 일간 기반 인생 경향과 입춘 기준 최대 5개 구간의 연도별 세운을 제공합니다. 연도 천간의 십성을 생활 주제로 풀며, 대운 시작 나이·순역·지지 합충은 계산하지 않습니다. 추가 성별 입력은 없습니다.
 
 ```powershell
-node --experimental-default-type=module tests/lifetime.test.mjs
+node tests/lifetime.test.mjs
 ```
