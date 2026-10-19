@@ -1,6 +1,6 @@
 import { onBirthResult } from './common.js';
 import { interpretToday } from './interpreter.js';
-import { ELEMENTS } from './content/interpretations.js';
+import { ELEMENTS, ELEMENT_BALANCE_COPY } from './content/interpretations.js';
 import { interpretPersonality } from './personality-interpreter.js';
 import { interpretLifetime } from './lifetime-interpreter.js';
 
@@ -12,6 +12,10 @@ let currentResult = null;
 function renderElements(result) {
   const chart = $('#element-chart');
   chart.replaceChildren();
+  $('#elements-explanation').hidden = true;
+  for (const id of ['#elements-distribution', '#elements-meaning']) {
+    $(id).textContent = '';
+  }
   if (!result) {
     chart.setAttribute('aria-label', '출생 정보 입력 전, 오행 구성 없음');
     $('#elements-status').textContent = '정보 입력 대기';
@@ -40,7 +44,23 @@ function renderElements(result) {
   }
   chart.setAttribute('aria-label', `확인된 글자의 오행 개수: ${labels.join(', ')}`);
   $('#elements-status').textContent = result.features.partial ? '일부 기둥 집계' : '8글자 집계';
-  $('#elements-note').textContent = `${result.features.elementCount}글자 기준${result.features.partial ? ' · 시간 미상·미확정 기둥 제외' : ''}. 강약이나 결핍을 뜻하지 않아요.`;
+  $('#elements-note').textContent = result.features.partial
+    ? `확인된 사주 ${result.features.elementCount}글자 기준(목·화·토·금·수가 각각 몇 글자씩 있는지 보여줌)`
+    : `사주 ${result.features.elementCount}글자 기준(목·화·토·금·수가 각각 몇 글자씩 있는지 보여줌)`;
+  const most = Object.keys(ELEMENTS).filter(key => counts[key] === maximum);
+  $('#elements-distribution').textContent = most.length === 5
+    ? '다섯 오행의 개수가 같아요.'
+    : `${most.map(key => ELEMENTS[key].name).join('·')} ${most.length > 1 ? '각각 ' : ''}${maximum}개로 가장 많아요.`;
+  for (const key of most) {
+    const paragraph = document.createElement('p');
+    const title = document.createElement('strong');
+    title.textContent = `${ELEMENTS[key].name} — `;
+    const copy = ELEMENT_BALANCE_COPY[key];
+    const lineBreak = document.createElement('br');
+    paragraph.append(title, `장점: ${copy.strength}`, lineBreak, `주의: ${copy.caution}`);
+    $('#elements-meaning').append(paragraph);
+  }
+  $('#elements-explanation').hidden = false;
 }
 
 function renderToday() {

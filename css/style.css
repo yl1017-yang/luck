@@ -465,8 +465,8 @@ h6 {font:inherit;}
   display:flex;
   align-items:center;
   gap:14px;
-  min-height:106px;
-  padding:23px;
+  min-height:84px;
+  padding:20px;
 }
 
 .summary-main p {
@@ -668,7 +668,7 @@ h6 {font:inherit;}
   display:flex;
   gap:14px;
   align-items:end;
-  margin-top:20px;
+  margin-top:8px;
 }
 
 .element-column {
@@ -722,6 +722,24 @@ h6 {font:inherit;}
 .element-column strong {
   display:block;
   margin-top:9px;
+}
+
+.elements-explanation {
+  margin-top:20px;
+}
+
+.elements-explanation h3 {
+  font-size:16px;
+  margin-bottom:10px;
+}
+
+.elements-explanation p {
+  font-size:14px;
+  line-height:1.8;
+  color:#646c58;
+  margin:0 0 12px;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
 }
 
 .chart-note {

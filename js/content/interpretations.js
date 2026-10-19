@@ -113,6 +113,15 @@ export const ELEMENTS = {
   water: { name: '수', image: '관찰과 탐색', tip: '알고 있는 사실과 더 확인하고 싶은 질문을 나누어 적어보세요.' },
 };
 
+// Traditional symbolic readings; counts alone do not establish strength or fortune.
+export const ELEMENT_BALANCE_COPY = {
+  wood: { strength: '새로운 일을 시작하고 꾸준히 성장하려는 의욕', caution: '의욕이 앞서 일을 너무 많이 벌이거나 자기주장을 고집하는 것' },
+  fire: { strength: '생각과 감정을 표현하고 사람들과 활발하게 어울리는 힘', caution: '마음이 급해 말이나 결정을 서두르는 것' },
+  earth: { strength: '맡은 일을 꾸준히 해내는 책임감과 끈기', caution: '변화를 미루거나 다른 사람의 책임까지 떠안는 것' },
+  metal: { strength: '기준을 세우고 일을 깔끔하게 정리하는 판단력', caution: '기준이 너무 엄격해 자신이나 주변 사람을 피곤하게 하는 것' },
+  water: { strength: '상황을 세심하게 관찰하고 깊이 생각하는 능력', caution: '걱정과 생각이 길어져 결정을 미루는 것' },
+};
+
 export const GLOSSARY = [
   { title: '사주팔자란?', text: '태어난 연·월·일·시를 네 기둥으로 나타내고, 각 기둥의 천간과 지지 두 글자를 합쳐 여덟 글자라고 불러요. 출생 시간을 모르면 시주는 제외해요.' },
   { title: '연주와 월주', text: '연주는 입춘 시각, 월주는 월을 여는 절기 시각을 경계로 구분해요. 양력 1일이나 음력 초하루에 바뀌는 달력 구분과는 달라요.' },
