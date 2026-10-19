@@ -82,7 +82,13 @@ export function interpretLifeNarrative(result) {
     const earlyTheme = earlyPillar ? LIFETIME_STAGE_THEMES[earlyPillar.stemRelation.tenGod] : null;
     const middleTheme = LIFETIME_STAGE_THEMES[inner];
     const lateTheme = latePillar ? LIFETIME_STAGE_THEMES[latePillar.stemRelation.tenGod] : null;
-    overview.push(`${earlyTheme ? `삶의 앞부분에서는 ${earlyTheme}을 마련하는 일이, ` : ''}중년에는 ${middleTheme}을 실제 일과 생활에 연결하는 일이 중심 과제입니다. ${lateTheme ? `후반에는 ${lateTheme}을 지금의 생활에 맞게 남기는 방향이 중요해집니다.` : '출생 시간이 없어 후반의 구체적인 흐름은 보류합니다.'} 각 시기의 경험을 다음 기반으로 이어 가는 것이 당신의 인생 흐름을 읽는 핵심입니다.`);
+    const stages = [];
+    if (earlyTheme) stages.push(`초년에는 ${earlyTheme}이 자신의 기준을 만들어 줍니다.`);
+    stages.push(`중년에는 ${middleTheme}을 통해 일과 생활에서 자리를 잡아 가는 것이 중요합니다.`);
+    stages.push(lateTheme
+      ? `후반에는 ${lateTheme}을 살리되, 지금의 생활에 맞게 활동과 책임을 조절하는 편이 좋습니다.`
+      : '출생 시간이 없어 후반의 구체적인 흐름은 보류합니다.');
+    overview.push(stages.join(' '));
     contentIds.add(`life.stage-link.${earlyPillar?.stemRelation.tenGod || 'unknown'}.${inner}.${latePillar?.stemRelation.tenGod || 'unknown'}`);
   }
   const areas = [
