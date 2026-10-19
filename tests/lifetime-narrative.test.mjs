@@ -5,6 +5,8 @@ import { calculateNatalFeatures } from '../js/natal-features.js';
 import { interpretLifeNarrative } from '../js/lifetime-narrative.js';
 import { LIFE_PROFILE_DEPTH } from '../js/content/lifetime-depth.js';
 import { LIFE_STAGE_DEPTH } from '../js/content/lifetime-stage-depth.js';
+import { LIFETIME_PATHS, LIFETIME_DEVELOPMENT } from '../js/content/lifetime-paths.js';
+import { interpretPersonality } from '../js/personality-interpreter.js';
 import {
   LIFE_MASTER_VOICES, LIFE_RELATION_VOICES, LIFE_MIDDLE_VOICES,
   LIFE_BALANCE_VOICES, LIFE_CROSS_VOICES, LIFE_RELATION_GROUPS,
@@ -45,17 +47,17 @@ test('60 consecutive day pillars produce complete, nonduplicated personal bodies
     const result = saju({ birthDate });
     pillars.add(result.pillars.day.hanja);
     const n = interpretLifeNarrative(result);
-    assert.equal(n.version, '3.1.0');
-    assert.equal(n.areas.length, 5);
+    assert.equal(n.version, '4.0.0');
+    assert.equal(n.areas.length, 4);
     assert.equal(n.stages.length, 3);
     assert.ok(n.areas.some(a => a.title.startsWith('직업운')));
     assert.ok(n.areas.some(a => a.title.startsWith('재물운')));
     assert.equal(new Set(body(n)).size, body(n).length);
     assert.doesNotMatch(body(n).join(' '), /undefined|천간|본기|지장간|같은 오행/);
     assert.doesNotMatch(body(n).join(' '), /살펴보|시작할 수 있어요|돌아볼 수|관점이에요|풀이해 볼|읽혀요/);
-    assert.ok(n.overview[0].startsWith('당신은'));
-    assert.ok(n.areas[1].paragraphs[0].includes('맞는 일은'));
-    assert.ok(n.areas[1].paragraphs[0].includes('피하는 편이 좋습니다'));
+    assert.ok(n.overview[0].startsWith('당신의 평생운은'));
+    assert.ok(n.areas[0].paragraphs.some(p => p.includes('후반')));
+    assert.ok(!n.areas.some(a => a.title.startsWith('성격')));
     assert.ok(n.title && n.tags.length === 3);
     assert.equal(n.overview.length, 4);
     for (const stage of n.stages) {
@@ -71,13 +73,40 @@ test('60 consecutive day pillars produce complete, nonduplicated personal bodies
   assert.ok(outputs.size > 10);
 });
 
-test('hour changes affect later-life lens, not job, money or core narrative', () => {
+test('hour changes affect the later-life lens and stage connection, not the career or wealth basis', () => {
   const first = interpretLifeNarrative(saju({ birthTime: '00:00' }));
   const second = interpretLifeNarrative(saju({ birthTime: '12:00' }));
   assert.notDeepEqual(first.stages[2].paragraphs, second.stages[2].paragraphs);
-  assert.deepEqual(first.overview, second.overview);
+  assert.deepEqual(first.overview.slice(0, 3), second.overview.slice(0, 3));
+  assert.notEqual(first.overview[3], second.overview[3]);
   assert.deepEqual(first.areas, second.areas);
   assert.deepEqual(first.stages.slice(0, 2), second.stages.slice(0, 2));
+});
+
+test('personality and lifetime never reuse whole paragraphs or the same hero title', () => {
+  for (let i = 0; i < 60; i += 1) {
+    const birthDate = new Date(Date.UTC(1978, 10, 1 + i)).toISOString().slice(0, 10);
+    const result = saju({ birthDate, birthTime: '08:00' });
+    const life = interpretLifeNarrative(result);
+    const personality = interpretPersonality(result);
+    const personalityCopy = new Set([...personality.overview, ...personality.details.flatMap(d => d.paragraphs)]);
+    assert.notEqual(life.title, personality.title);
+    for (const copy of body(life)) assert.ok(!personalityCopy.has(copy), `Shared paragraph: ${copy}`);
+    assert.ok(life.contentIds.every(id => !/^life\.(master|depth\.master|cross)\./.test(id)));
+  }
+});
+
+test('lifelong development manuscripts cover every chart context without repeated padding', () => {
+  assert.equal(Object.keys(LIFETIME_PATHS).length, 10);
+  assert.equal(Object.keys(LIFETIME_DEVELOPMENT).length, 10);
+  const paragraphs = Object.values(LIFETIME_PATHS).map(p => p.intro);
+  for (const entry of Object.values(LIFETIME_DEVELOPMENT)) {
+    assert.equal(entry.overview.length, 2);
+    for (const field of ['work', 'wealth', 'family', 'stability']) assert.equal(entry[field].length, 3);
+    paragraphs.push(...Object.values(entry).flat());
+  }
+  assert.equal(paragraphs.length, 150);
+  assert.equal(new Set(paragraphs).size, 150);
 });
 
 test('same day pillar in a different month changes work lens while keeping close-relationship lens', () => {

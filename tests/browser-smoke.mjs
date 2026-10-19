@@ -123,14 +123,14 @@ try {
   await waitFor("document.querySelectorAll('#annual-cards .annual-card').length === 2");
   assert.ok(await evaluate("Array.from(document.querySelectorAll('#annual-cards > article')).every(card => card.querySelectorAll(':scope > .body-copy').length === 5)"));
   assert.ok(await evaluate("document.querySelector('#annual-cards .body-copy').textContent.includes('년의 당신은')"));
-  assert.equal(await evaluate("document.querySelectorAll('#lifetime-details .card').length"), 8);
+  assert.equal(await evaluate("document.querySelectorAll('#lifetime-details .card').length"), 7);
   assert.deepEqual(await evaluate("Array.from(document.querySelectorAll('#lifetime-details h3')).slice(0, 3).map(el => el.textContent.split(' — ')[0])"), ['초년운', '중년운', '말년운']);
-  assert.equal(await evaluate("document.querySelectorAll('#lifetime-details details').length"), 8);
+  assert.equal(await evaluate("document.querySelectorAll('#lifetime-details details').length"), 7);
   assert.equal(await evaluate("document.querySelector('#lifetime-intro > p').textContent.includes('이미지')"), false);
-  assert.equal(await evaluate("document.querySelector('#lifetime-view').dataset.readingVersion"), '3.1.0');
+  assert.equal(await evaluate("document.querySelector('#lifetime-view').dataset.readingVersion"), '4.0.0');
   assert.equal(await evaluate("document.querySelectorAll('#lifetime-intro > p').length"), 4);
   assert.ok(await evaluate("Array.from(document.querySelectorAll('#lifetime-details > article')).slice(0,3).every(card => card.querySelectorAll(':scope > p').length >= 4)"));
-  assert.ok(await evaluate("document.querySelector('#lifetime-intro > p').textContent.startsWith('당신은')"));
+  assert.ok(await evaluate("document.querySelector('#lifetime-intro > p').textContent.startsWith('당신의 평생운은')"));
   assert.equal(await evaluate("Array.from(document.querySelectorAll('#lifetime-details > article > p')).some(el => /천간|본기|지장간|같은 오행/.test(el.textContent))"), false);
   assert.equal(await evaluate("document.querySelectorAll('.navigation a').length"), 4);
   assert.ok((await evaluate("document.querySelector('#page-title').textContent")).includes('평생운세'));

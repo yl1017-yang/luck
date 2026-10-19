@@ -129,7 +129,7 @@ test('life narrative distinguishes same day master with different birth pillars'
   assert.notDeepEqual(first.overview, second.overview);
   assert.notDeepEqual(first.stages[1], second.stages[1]);
   assert.equal(first.stages.length, 3);
-  assert.equal(first.areas.length, 5);
+  assert.equal(first.areas.length, 4);
   for (const area of first.areas) {
     assert.ok(area.paragraphs.length >= 2);
     assert.ok(area.basis);

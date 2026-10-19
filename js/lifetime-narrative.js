@@ -1,10 +1,9 @@
 import { calculateNatalFeatures } from './natal-features.js';
 import {
-  LIFE_NARRATIVE_VERSION, LIFE_MASTER_VOICES, LIFE_RELATION_VOICES,
-  LIFE_MIDDLE_VOICES, LIFE_BALANCE_VOICES, LIFE_RELATION_GROUPS, LIFE_CROSS_VOICES,
+  LIFE_RELATION_VOICES, LIFE_MIDDLE_VOICES,
 } from './content/lifetime-narratives.js';
-import { LIFE_PROFILE_DEPTH } from './content/lifetime-depth.js';
 import { LIFE_STAGE_DEPTH } from './content/lifetime-stage-depth.js';
+import { LIFETIME_PATH_VERSION, LIFETIME_PATHS, LIFETIME_DEVELOPMENT, LIFETIME_STAGE_THEMES } from './content/lifetime-paths.js';
 
 const LABELS = { year: '연주', month: '월주', day: '일주', hour: '시주' };
 
@@ -34,9 +33,8 @@ export function interpretLifeNarrative(result) {
   const D = facts.dayMaster.hanja;
   const outer = facts.context.tenGod;
   const inner = facts.pillars.day.hiddenStems[0].tenGod;
-  const master = (field) => select(LIFE_MASTER_VOICES, D, field, 'life.master');
+  const path = LIFETIME_PATHS[D];
   const voice = (god, field) => select(LIFE_RELATION_VOICES, god, field, 'life.relation');
-  const depth = (field) => expand(LIFE_PROFILE_DEPTH, D, field, 'life.depth.master');
   const stageDepth = (god, stage) => expand(LIFE_STAGE_DEPTH, god, stage, 'life.depth.stage');
   const basis = (key) => {
     const value = facts.pillars[key];
@@ -78,28 +76,29 @@ export function interpretLifeNarrative(result) {
     basis: `${basis('hour')}. 시주의 두 관계를 삶의 후반에 이어갈 활동에 연결한 해석`,
   } : unavailable('말년운 — 내게 맞는 생활을 남기는 때');
 
-  const overview = [master('core'), ...depth('overview')];
+  const overview = [select(LIFETIME_PATHS, D, 'intro', 'life.path'),
+    ...expand(LIFETIME_DEVELOPMENT, outer, 'overview', 'life.development')];
   if (facts.pillars.month) {
-    overview.push(select(LIFE_CROSS_VOICES[LIFE_RELATION_GROUPS[outer]],
-      LIFE_RELATION_GROUPS[inner], null, `life.cross.${LIFE_RELATION_GROUPS[outer]}`));
+    const earlyTheme = earlyPillar ? LIFETIME_STAGE_THEMES[earlyPillar.stemRelation.tenGod] : null;
+    const middleTheme = LIFETIME_STAGE_THEMES[inner];
+    const lateTheme = latePillar ? LIFETIME_STAGE_THEMES[latePillar.stemRelation.tenGod] : null;
+    overview.push(`${earlyTheme ? `삶의 앞부분에서는 ${earlyTheme}을 마련하는 일이, ` : ''}중년에는 ${middleTheme}을 실제 일과 생활에 연결하는 일이 중심 과제입니다. ${lateTheme ? `후반에는 ${lateTheme}을 지금의 생활에 맞게 남기는 방향이 중요해집니다.` : '출생 시간이 없어 후반의 구체적인 흐름은 보류합니다.'} 각 시기의 경험을 다음 기반으로 이어 가는 것이 당신의 인생 흐름을 읽는 핵심입니다.`);
+    contentIds.add(`life.stage-link.${earlyPillar?.stemRelation.tenGod || 'unknown'}.${inner}.${latePillar?.stemRelation.tenGod || 'unknown'}`);
   }
   const areas = [
-    { title: '성격 — 잘하는 모습과 마음이 지치는 순간',
-      paragraphs: [master('temperament'), ...depth('temperament'), voice(outer, 'outward')], basis: contextBasis },
-    { title: '직업운 — 실력을 쓰기 좋은 자리',
-      paragraphs: [master('work'), ...depth('work'), voice(outer, 'work')],
-      action: voice(outer, 'action'), basis: contextBasis },
-    { title: '재물운 — 돈을 쓰고 관리하는 방식',
-      paragraphs: [master('money'), ...depth('money'), voice(outer, 'money')], basis: contextBasis },
-    { title: '애정·가족·대인관계 — 가까울수록 반복되는 모습',
-      paragraphs: [master('relationship'), ...depth('relationship'), voice(inner, 'private')], basis: dayBasis },
-    { title: '생활 균형 — 무리하지 않고 오래 가는 방식',
-      paragraphs: [master('rhythm'), ...depth('rhythm'), select(LIFE_BALANCE_VOICES, inner, null, 'life.balance')], basis: dayBasis },
+    { title: '직업운 — 경력을 쌓고 역할을 넓혀 가는 흐름',
+      paragraphs: expand(LIFETIME_DEVELOPMENT, outer, 'work', 'life.development'), basis: contextBasis },
+    { title: '재물운 — 생활의 기반을 만들고 유지하는 흐름',
+      paragraphs: expand(LIFETIME_DEVELOPMENT, outer, 'wealth', 'life.development'), basis: contextBasis },
+    { title: '가정·인연운 — 시기마다 달라지는 관계와 역할',
+      paragraphs: expand(LIFETIME_DEVELOPMENT, inner, 'family', 'life.development'), basis: dayBasis },
+    { title: '전환과 후반의 생활 — 이어갈 것과 내려놓을 것',
+      paragraphs: expand(LIFETIME_DEVELOPMENT, inner, 'stability', 'life.development'), basis: dayBasis },
   ];
   return {
-    version: LIFE_NARRATIVE_VERSION,
-    title: LIFE_MASTER_VOICES[D].title,
-    tags: [...LIFE_MASTER_VOICES[D].tags],
+    version: LIFETIME_PATH_VERSION,
+    title: path.title,
+    tags: [...path.tags],
     overview,
     basis: `${['year', 'month', 'day', 'hour'].map(basis).filter(Boolean).join(' / ')}. ${contextBasis}. 일간을 기본으로 월간과 일지 본기의 생활 맥락을 연결했으며, 십성의 세력이나 실제 성격을 측정한 결과가 아님`,
     stages: [early, middle, later],
