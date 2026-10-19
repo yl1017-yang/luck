@@ -80,24 +80,25 @@ try {
   assert.equal(await evaluate("document.querySelector('#fortune-content').hidden"), true);
   await evaluate(`sessionStorage.setItem('luck.birthProfile.v1', ${JSON.stringify(JSON.stringify(profile))}); sessionStorage.setItem('luck.fortuneView.v1', '{broken')`);
   await navigate();
-  await waitFor("document.querySelectorAll('#fortune-areas article').length === 5");
+  await waitFor("document.querySelectorAll('#fortune-months button').length === 12");
+  assert.equal(await evaluate("document.querySelector('#fortune-areas')"), null);
+  assert.equal(await evaluate("document.querySelector('#fortune-cycles')"), null);
   assert.equal(await evaluate("document.querySelectorAll('#fortune-months button').length"), 12);
+  assert.equal(await evaluate("document.querySelectorAll('#fortune-month-content h6').length"), 0);
+  assert.ok(await evaluate("Array.from(document.querySelectorAll('.fortune-month-segment')).every(card => card.querySelectorAll(':scope > .body-copy').length === 7)"));
+  assert.ok(await evaluate("document.querySelector('.fortune-month-segment > .body-copy').textContent.startsWith('이 시기의 당신은')"));
+  assert.equal(await evaluate("Array.from(document.querySelectorAll('.fortune-month-segment > .body-copy')).some(node => /살펴보|적어보|확인해 보세요/.test(node.textContent))"), false);
   const summaryYear = await evaluate("Number(document.querySelector('#annual-cards h3').textContent.slice(0, 4))");
   await evaluate("document.querySelector('#annual-cards button').click()");
   assert.equal(await evaluate("Number(document.querySelector('#fortune-year').value)"), summaryYear);
-  assert.equal(await evaluate("Number(document.querySelector('#fortune-cycles [aria-pressed=true]').dataset.cycle)"), summaryYear);
   await chooseYear(2024);
   await evaluate("document.querySelector('[data-month=\"2\"]').click()");
-  assert.equal(await evaluate("document.querySelectorAll('#fortune-cycles button').length"), 2);
   const monthText = await evaluate("document.querySelector('#fortune-month-content').textContent");
-  await evaluate("document.querySelector('[data-cycle=\"2023\"]').click()");
-  assert.equal(await evaluate("document.querySelector('#fortune-month-content').textContent"), monthText);
   assert.ok(monthText.includes('2024-02-01') && monthText.includes('2024-03-01'));
   await clock('2027-03-01T00:00:00+09:00');
   assert.equal(await evaluate("document.querySelector('#fortune-year').value"), '2024');
   await navigate();
   assert.equal(await evaluate("document.querySelector('#fortune-year').value"), '2024');
-  assert.equal(await evaluate("document.querySelector('#fortune-cycles [aria-pressed=true]').dataset.cycle"), '2023');
   assert.equal(await evaluate("document.querySelector('#fortune-months [aria-pressed=true]').dataset.month"), '2');
   await evaluate("document.querySelector('[data-month=\"3\"]').focus()");
   assert.equal(await evaluate("document.activeElement.dataset.month"), '3');
@@ -107,7 +108,6 @@ try {
   assert.equal(await evaluate("document.activeElement.dataset.month"), '3');
   await chooseYear(1990);
   await evaluate("document.querySelector('[data-month=\"1\"]').click()");
-  assert.equal(await evaluate("document.querySelectorAll('#fortune-cycles button').length"), 1);
   assert.ok((await evaluate("document.querySelector('#fortune-month-content').textContent")).includes('출생 전 기간'));
   await chooseYear(2050);
   await evaluate("document.querySelector('[data-month=\"12\"]').click()");
@@ -144,10 +144,10 @@ try {
   await evaluate(`sessionStorage.setItem('luck.birthProfile.v1', ${JSON.stringify(JSON.stringify(profile))}); sessionStorage.setItem('luck.fortuneView.v1', JSON.stringify({ year: 2024, cycleYear: 1900, month: 99 }))`);
   await navigate();
   await clock('2026-01-01T00:00:00+09:00');
-  assert.equal(await evaluate("document.querySelector('#fortune-cycles [aria-pressed=true]').dataset.cycle"), '2025');
+  assert.equal(await evaluate("document.querySelector('#fortune-months [aria-pressed=true]').dataset.month"), '1');
   const spring = await evaluate("import('./js/saju-calculator.js').then(module => module.springBoundary(2026).instant)");
   await clock(spring);
-  assert.equal(await evaluate("document.querySelectorAll('#fortune-cycles [aria-pressed=true]').length"), 0);
+  assert.equal(await evaluate("[...document.querySelectorAll('#fortune-month-content h5')].filter(node => node.textContent.includes('현재 구간')).length"), 0);
   assert.ok((await evaluate("document.querySelector('#fortune-status').textContent")).includes('±60초'));
   // Inspect every monthly boundary in the actual rendered page, not just the engine.
   const boundaries = await evaluate(`Promise.all([import('./js/common.js'), import('./js/fortune-periods.js')]).then(([common, periods]) => {
@@ -167,9 +167,8 @@ try {
   }
   await clock('2027-01-01T00:00:00+09:00');
   assert.equal(await evaluate("document.querySelector('#fortune-year').value"), '2027');
-  assert.equal(await evaluate("document.querySelector('#fortune-cycles [aria-pressed=true]').dataset.cycle"), '2026');
+  assert.equal(await evaluate("document.querySelector('#fortune-months [aria-pressed=true]').dataset.month"), '1');
   await clock('2026-03-01T00:00:00+09:00');
-  assert.equal(await evaluate("document.querySelector('#fortune-cycles [aria-pressed=true]').dataset.cycle"), '2026');
   assert.equal(await evaluate("document.querySelector('#fortune-months [aria-pressed=true]').dataset.month"), '3');
   // Manual selection and focus survive the monthly boundary refresh.
   await evaluate("document.querySelector('[data-month=\"4\"]').click()");
@@ -192,7 +191,7 @@ try {
   assert.equal(await evaluate("document.querySelector('#fortune-content').hidden"), true);
   assert.ok((await evaluate("document.querySelector('#fortune-status').textContent")).includes('계산하지 못'));
   assert.deepEqual(errors, []);
-  console.log('PASS: detailed annual/monthly UI, periods, selection/restore, editing, keyboard, widths, clock boundaries, storage denial and failure states');
+  console.log('PASS: monthly UI without duplicate annual areas, periods, selection/restore, editing, keyboard, widths, clock boundaries, storage denial and failure states');
 } finally {
   socket.close();
   await fetch(`${debug}/json/close/${page.id}`).catch(() => {});

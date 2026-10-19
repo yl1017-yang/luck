@@ -1,6 +1,5 @@
 import { onBirthResult } from './common.js';
 import { interpretLifetime } from './lifetime-interpreter.js';
-import { renderCards } from './render.js';
 import { createFortuneView } from './fortune-view.js';
 
 const $ = (selector) => document.querySelector(selector);
@@ -25,44 +24,84 @@ function renderLifetime() {
   if (renderedResult === currentResult && renderedCycle === cycle) return;
   renderedResult = currentResult;
   renderedCycle = cycle;
-  $('#lifetime-status').textContent = reading ? `${reading.master.name} · 일간 기반` : '정보 입력 대기';
-  $('#lifetime-title').textContent = reading?.title || '나를 지탱하는 삶의 방향';
-  $('#lifetime-intro').textContent = reading?.overview || '출생 정보를 입력하면 인생 전반의 경향과 연도별 생활 주제를 확인할 수 있어요.';
+  $('#lifetime-status').textContent = reading ? `${reading.master.name} · 원국 기반 상세` : '정보 입력 대기';
+  $('#lifetime-title').textContent = reading?.narrative?.title || '나를 지탱하는 삶의 방향';
+  if (reading?.narrative) $('#lifetime-view').dataset.readingVersion = reading.narrative.version;
+  else delete $('#lifetime-view').dataset.readingVersion;
+  $('#lifetime-intro').replaceChildren();
+  for (const copy of reading?.narrative?.overview || [reading?.overview || '출생 정보를 입력하면 평생 총운과 초년·중년·말년의 관점을 확인할 수 있어요.']) {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = copy;
+    $('#lifetime-intro').append(paragraph);
+  }
+  const addBasis = (container, copy) => {
+    const details = document.createElement('details');
+    const summary = document.createElement('summary');
+    summary.textContent = '이 풀이의 근거';
+    const text = document.createElement('p');
+    text.textContent = copy;
+    details.append(summary, text);
+    container.append(details);
+  };
+  if (reading?.narrative) addBasis($('#lifetime-intro'), reading.narrative.basis);
   $('#lifetime-tags').replaceChildren();
-  for (const tag of reading?.master.tags || []) {
+  for (const tag of reading?.narrative?.tags || []) {
     const span = document.createElement('span');
     span.textContent = tag;
     $('#lifetime-tags').append(span);
   }
-  renderCards('#lifetime-details', reading?.details || []);
-  $('#lifetime-note').textContent = error || reading?.note || '수명이나 특정 나이의 사건을 예측하지 않는 자기 성찰용 콘텐츠예요.';
+  $('#lifetime-details').replaceChildren();
+  for (const item of reading?.narrative ? [...reading.narrative.stages, ...reading.narrative.areas] : []) {
+    const card = document.createElement('article');
+    card.className = 'card';
+    const title = document.createElement('h3');
+    title.textContent = item.title;
+    card.append(title);
+    for (const copy of item.paragraphs) {
+      const paragraph = document.createElement('p');
+      paragraph.textContent = copy;
+      card.append(paragraph);
+    }
+    if (item.action) {
+      const action = document.createElement('p');
+      action.className = 'info-note';
+      action.textContent = item.action;
+      card.append(action);
+    }
+    addBasis(card, item.basis);
+    $('#lifetime-details').append(card);
+  }
+  $('#lifetime-error').textContent = error;
+  $('#lifetime-error').hidden = !error;
   $('#annual-status').textContent = reading ? (reading.nearBoundary ? '입춘 경계 확인 필요' : `${reading.years.length}개 연도`) : '정보 입력 대기';
-  $('#annual-note').textContent = reading?.annualNote || '출생 정보를 입력하면 연도별 세운을 확인할 수 있어요.';
+  $('#annual-note').textContent = reading?.nearBoundary ? '입춘 경계 1분 이내라 현재 구간을 확정하기 어려워요.' : '';
+  $('#annual-note').hidden = !reading?.nearBoundary;
   $('#annual-cards').replaceChildren();
   for (const year of reading?.years || []) {
     const card = document.createElement('article');
     card.className = 'annual-card';
     const badge = document.createElement('span');
     badge.className = 'badge';
-    badge.textContent = `${year.tenGod}${year.current ? ' · 현재 구간' : ''}`;
+    badge.textContent = year.current ? '현재 구간' : '이어지는 흐름';
     const title = document.createElement('h3');
-    title.textContent = `${year.year}년 ${year.pillar.hangul}(${year.pillar.hanja})`;
+    title.textContent = `${year.year}년`;
     const period = document.createElement('p');
     period.className = 'muted small';
     period.textContent = `${formatBoundary(year.start)}부터 ${formatBoundary(year.end)} 직전까지`;
     const topic = document.createElement('h4');
-    topic.textContent = year.reading.title;
-    const text = document.createElement('p');
-    text.className = 'body-copy';
-    text.textContent = year.reading.text;
-    const action = document.createElement('p');
-    action.className = 'info-note';
-    action.textContent = year.reading.action;
-    card.append(badge, title, period, topic, text, action);
+    topic.textContent = year.narrative.title;
+    card.append(badge, title, period, topic);
+    for (const copy of year.narrative.paragraphs) {
+      const paragraph = document.createElement('p');
+      paragraph.className = 'body-copy';
+      paragraph.textContent = copy;
+      card.append(paragraph);
+    }
+    addBasis(card, `일간 ${year.narrative.basis.dayMaster} · ${year.year}년 ${year.pillar.hangul}(${year.pillar.hanja}) · ${year.tenGod}`);
     const detail = document.createElement('button');
     detail.type = 'button';
     detail.className = 'button button-outline';
-    detail.textContent = year.year < 1901 ? '상세는 1901년부터 제공해요' : `${year.year}년 상세 보기`;
+    detail.textContent = year.year < 1901 ? '월운은 1901년부터 제공해요' : `${year.year}년 월운 보기`;
     detail.disabled = year.year < 1901;
     detail.addEventListener('click', () => fortuneView.open(year.year));
     card.append(detail);

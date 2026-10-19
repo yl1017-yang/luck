@@ -82,10 +82,10 @@ async function pressEnter() {
   await call('Input.dispatchKeyEvent', { type: 'keyDown', key: 'Enter', code: 'Enter', text: '\r', unmodifiedText: '\r', windowsVirtualKeyCode: 13 });
   await call('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13 });
 }
-const directRender = `Promise.all([import('./js/common.js'), import('./js/natal-features.js'), import('./js/natal-interpreter.js'), import('./js/natal-view.js'), import('./js/content/natal-details.js')]).then(([common, calc, interpreter, view, content]) => {
+const directRender = `Promise.all([import('./js/common.js'), import('./js/natal-features.js'), import('./js/natal-interpreter.js'), import('./js/natal-view.js'), import('./js/content/natal-details.js'), import('./js/natal-personal.js')]).then(([common, calc, interpreter, view, content, personal]) => {
   let result; const unsubscribe = common.onBirthResult(value => { result = value; }); unsubscribe();
   const features = calc.calculateNatalFeatures(result); const catalog = structuredClone(content.NATAL_CATALOG);
-  return { result, features, catalog, interpreter, view, calc };
+  return { result, features, catalog, interpreter, view, calc, personal };
 })`;
 
 try {
@@ -103,23 +103,26 @@ try {
   assert.equal(await evaluate("document.querySelectorAll('#pillars .pillar').length"), 4);
   assert.equal(await evaluate("document.querySelectorAll('.natal-group').length"), 5);
   assert.deepEqual(await evaluate("[...document.querySelectorAll('.natal-group > h3')].map(n => n.textContent)"), ['원국 요약', '일간·일주', '기둥별 십성·지장간', '출생 계절·오행', '분야별 원국 해석']);
-  assert.ok((await evaluate("document.querySelector('[data-section=\"dayPillar\"]').textContent")).includes('배움으로 방향을 다듬기'));
+  assert.ok((await evaluate("document.querySelector('[data-section=\"dayPillar\"]').textContent")).includes('배운 내용을 자기 목표에 연결'));
   assert.ok((await evaluate("document.querySelector('#page-title').textContent")).includes('<b>테스트</b>'));
   assert.equal(await evaluate("document.querySelectorAll('#page-title b').length"), 0);
   assert.ok((await evaluate("document.querySelector('[data-section=\"pillars.day\"]').textContent")).includes('일간·나의 기준'));
-  const expected = await evaluate(`${directRender}.then(({features, interpreter}) => {
+  const expected = await evaluate(`${directRender}.then(({features, interpreter, personal}) => {
     const reading = interpreter.interpretNatalDetails(features);
-    return reading.sections.filter(s => !s.key.startsWith('pillars.')).map(s => ({ key:s.key, summary:s.summary, paragraphs:s.blocks.flatMap(b=>b.paragraphs) }));
+    const copy = personal.interpretNatalPersonal(reading);
+    return reading.sections.filter(s => !s.key.startsWith('pillars.')).map(s => ({ key:s.key, summary:copy.sections[s.key]?.title || s.summary, paragraphs:copy.sections[s.key]?.paragraphs || s.blocks.flatMap(b=>b.paragraphs) }));
   })`);
   for (const part of expected) {
     const actual = await evaluate(`document.querySelector('[data-section="${part.key}"]').textContent`);
     assert.ok(actual.includes(part.summary), part.key);
     for (const paragraph of part.paragraphs) assert.ok(actual.includes(paragraph), part.key);
   }
-  // Native details open through actual keyboard input, retaining focus.
-  await evaluate("document.querySelector('[data-section=\"workResources\"] .natal-copy > summary').focus()");
-  await pressEnter();
-  assert.equal(await evaluate("document.querySelector('[data-section=\"workResources\"] .natal-copy').open"), true);
+  // Personal text is visible immediately; only evidence remains collapsible.
+  assert.equal(await evaluate("document.querySelectorAll('details.natal-copy').length"), 0);
+  assert.equal(await evaluate("document.querySelector('#natal-content').textContent.includes('상세 풀이 펼치기')"), false);
+  assert.ok(await evaluate("document.querySelector('[data-section=\"workResources\"] .natal-copy > p').getClientRects().length > 0"));
+  assert.ok(await evaluate("document.querySelector('[data-section=\"overview\"] .natal-copy > p').textContent.startsWith('당신은')"));
+  assert.equal(await evaluate("document.querySelector('#natal-content').textContent.includes('돌아볼 질문:')"), false);
   await evaluate("document.querySelector('[data-section=\"workResources\"] .natal-basis > summary').focus()");
   await pressEnter();
   assert.equal(await evaluate("document.querySelector('[data-section=\"workResources\"] .natal-basis').open"), true);
@@ -140,8 +143,8 @@ try {
   await edit('2000-02-06');
   const after = await evaluate("document.querySelector('[data-section=\"dayPillar\"]').textContent");
   assert.notEqual(before, after);
-  assert.ok(after.includes('목표를 개선할 질문 찾기'));
-  assert.equal(after.includes('배움으로 방향을 다듬기'), false);
+  assert.ok(after.includes('정한 목표를 유지하면서 불편한 방법은 고치려는'));
+  assert.equal(after.includes('배운 내용을 자기 목표에 연결'), false);
   const content = await evaluate("document.querySelector('#natal-content').textContent");
   await navigate('personality.html');
   await evaluate("document.querySelector('a[href=\"./saju.html\"]').click()");

@@ -1,4 +1,5 @@
 import { describePillar } from './saju-calculator.js';
+import { interpretNatalPersonal } from './natal-personal.js';
 
 const $ = (selector) => document.querySelector(selector);
 const LABELS = { year: '연주', month: '월주', day: '일주', hour: '시주' };
@@ -50,32 +51,26 @@ function basisView(section) {
   return details;
 }
 
-function readingCard(section) {
+function readingCard(section, personal = null) {
   const card = node('article', null, 'card natal-card');
   card.dataset.section = section.key;
-  card.append(node('h4', section.title));
+  card.append(node('h4', personal?.title || section.title));
   if (['unavailable-feature', 'unavailable-content'].includes(section.status)) {
     card.append(node('p', missingMessage(section), 'info-note'), basisView(section));
     return card;
   }
-  card.append(node('p', section.summary, 'info-note'));
+  if (!personal) card.append(node('p', section.summary, 'info-note'));
   if (section.status === 'partial-content') card.append(node('p', missingMessage(section), 'muted'));
-  if (section.blocks.length) {
-    const details = node('details', null, 'natal-copy');
-    details.open = ['overview', 'dayPillar'].includes(section.key);
-    const summary = node('summary', '상세 풀이 펼치기');
-    summary.setAttribute('aria-label', `${section.title} 상세 풀이 펼치기`);
-    details.append(summary);
+  if (personal) {
+    const body = node('div', null, 'natal-copy');
+    for (const paragraph of personal.paragraphs) body.append(node('p', paragraph, 'body-copy'));
+    card.append(body);
+  } else if (section.blocks.length) {
+    const body = node('div', null, 'natal-copy');
     for (const block of section.blocks) {
-      const body = node('div', null, 'natal-block');
-      body.append(node('h5', block.title));
-      if (block.summary !== section.summary) body.append(node('p', block.summary, 'muted'));
       for (const paragraph of block.paragraphs) body.append(node('p', paragraph, 'body-copy'));
-      body.append(node('p', `돌아볼 질문: ${block.question}`, 'body-copy'));
-      if (block.action) body.append(node('p', `실천 제안: ${block.action}`, 'info-note'));
-      details.append(body);
     }
-    card.append(details);
+    card.append(body);
   }
   card.append(basisView(section));
   return card;
@@ -96,6 +91,7 @@ function pillarCard(section) {
 
 export function renderNatalError(message = '상세 계산을 완료하지 못했어요. 출생 정보를 다시 확인하거나 수정해 주세요.') {
   $('#natal-status').textContent = message;
+  $('#natal-status').hidden = false;
   $('#natal-content').replaceChildren();
   $('#natal-content').hidden = true;
   $('#natal-navigation').hidden = true;
@@ -106,8 +102,10 @@ export function renderNatalDetails(reading) {
   if (!reading) { renderNatalError('출생 정보를 입력하면 일간·일주와 십성·지장간, 분야별 상세 풀이를 확인할 수 있어요.'); return; }
   if (reading.status !== 'available') { renderNatalError('일간 또는 일주를 확정하지 못해 상세 풀이를 제공하지 않아요. 출생 정보를 확인해 주세요.'); return; }
   const excluded = reading.facts.excludedPillars.map((key) => LABELS[key]);
-  $('#natal-status').textContent = `${reading.note}${excluded.length ? ` 제외한 기둥: ${excluded.join('·')}.` : ''}${reading.contentStatus === 'partial' ? ' 일부 해석 원고를 준비하지 못했어요. 해당 영역에 따로 안내해요.' : ''}`;
+  $('#natal-status').textContent = `${excluded.length ? `제외한 기둥: ${excluded.join('·')}.` : ''}${reading.contentStatus === 'partial' ? ' 일부 해석 원고를 준비하지 못했어요. 해당 영역에 따로 안내해요.' : ''}`;
+  $('#natal-status').hidden = !$('#natal-status').textContent;
   const content = $('#natal-content');
+  const personal = interpretNatalPersonal(reading);
   content.replaceChildren();
   const groups = [
     ['natal-summary', '원국 요약', (s) => s.key === 'overview'],
@@ -124,8 +122,8 @@ export function renderNatalDetails(reading) {
     group.setAttribute('aria-labelledby', id);
     group.append(heading);
     if (id === 'natal-pillars') group.append(node('p', '아래 간지·십성·지장간은 계산 사실이에요. 같은 십성의 생활 주제는 실제 등장 위치를 모아 한 번 설명해요. 본기·중기·여기는 채택 표의 표시 순서이며 세력 비율이 아니에요.', 'muted body-copy'));
-    if (id === 'natal-fields') group.append(node('p', '출생 원국의 기본 경향을 돌아보는 설명이에요. 선택 연도에 따라 달라지는 연간 운세·월운은 평생운세에서 확인할 수 있어요.', 'muted body-copy'));
-    for (const section of reading.sections.filter(match)) group.append(section.key.startsWith('pillars.') ? pillarCard(section) : readingCard(section));
+    if (id === 'natal-fields') group.append(node('p', '당신의 성격과 맞는 일, 돈과 관계를 다루는 방식을 설명합니다. 연도·월별 흐름은 평생운세에서 확인할 수 있어요.', 'muted body-copy'));
+    for (const section of reading.sections.filter(match)) group.append(section.key.startsWith('pillars.') ? pillarCard(section) : readingCard(section, personal.sections[section.key]));
     content.append(group);
   }
   content.hidden = false;

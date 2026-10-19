@@ -76,7 +76,7 @@ h6 {font:inherit;}
 }
 
 .header-inner {
-  min-height:90px;
+  min-height:80px;
   display:flex;
   align-items:center;
   gap:50px;
@@ -286,7 +286,7 @@ h6 {font:inherit;}
 
 .natal-card .body-copy,
 .natal-block .muted {
-  max-width: 80ch;
+  /* max-width: 80ch; */
 }
 
 .natal-navigation {
@@ -438,7 +438,7 @@ h6 {font:inherit;}
   .navigation {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 6px;
+    gap: 2px;
   }
 }
 
@@ -886,6 +886,32 @@ h6 {font:inherit;}
   color:#6c947f;
 }
 
+#lifetime-view .personality-hero {
+  grid-template-columns:minmax(0,1fr);
+}
+
+#lifetime-view .personality-art {
+  display:none;
+}
+
+#lifetime-view .personality-hero .body-copy {
+  max-width:none;
+}
+
+#lifetime-details {
+  grid-template-columns:minmax(0,1fr);
+}
+
+#lifetime-details p,
+#lifetime-intro p {
+  line-height:1.6;
+  margin:8px 0;
+}
+
+#lifetime-view summary {
+  cursor:pointer;
+}
+
 .personality-hero {
   display:grid;
   grid-template-columns:1.5fr 1fr;
@@ -1124,7 +1150,7 @@ input[type=checkbox],input[type=radio] {
 
 @media(max-width:1000px) {
   .header-inner {
-    gap:25px;
+    gap:20px;
   }
 
   .summary-main {
@@ -1159,8 +1185,8 @@ input[type=checkbox],input[type=radio] {
 @media(max-width:700px) {
   .header-inner {
     flex-wrap:wrap;
-    gap:10px;
-    padding-block:16px;
+    gap:8px;
+    padding-block:12px;
     justify-content:center;
   }
 
@@ -1174,7 +1200,7 @@ input[type=checkbox],input[type=radio] {
   }
 
   .nav-button {
-    padding:9px 18px;
+    padding:6px 18px;
     font-size:15px;
   }
 

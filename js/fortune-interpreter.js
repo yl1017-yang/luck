@@ -1,6 +1,8 @@
 import { ANNUAL_DETAILS, DETAIL_AREAS, DETAIL_VERSION } from './content/annual-details.js';
 import { MONTHLY_DETAILS, MONTHLY_BRIDGES, MONTHLY_FIELDS } from './content/monthly-details.js';
 import { tenGodForStems } from './saju-calculator.js';
+import { interpretMonthlyNarrative } from './monthly-narrative.js';
+import { MONTHLY_NARRATIVE_VERSION } from './content/monthly-narratives.js';
 
 const DEFAULT_CONTENT = { annual: ANNUAL_DETAILS, monthly: MONTHLY_DETAILS, bridges: MONTHLY_BRIDGES, version: DETAIL_VERSION };
 const UNAVAILABLE = '이 해석을 준비하지 못했어요.';
@@ -39,6 +41,8 @@ export function interpretDetailedFortune(result, periods, catalog = DEFAULT_CONT
   const common = {
     ...output,
     version: catalog.version,
+    monthlyNarrativeVersion: MONTHLY_NARRATIVE_VERSION,
+    monthlyNarrativeNote: '월별 풀이는 일간과 해당 기간의 연·월 천간 관계를 연결한 전통적 해석입니다. 실제 사건이나 수입·관계의 결과를 확정하지 않으며, 같은 계산 특징에는 같은 문구가 쓰입니다.',
     contentStatus: 'unavailable', annualReadings: [], monthlyReadings: [], contentIds: [],
     note: '확정된 일간과 연·월 천간의 십성을 생활 주제로 풀었어요. 같은 일간과 같은 기간에는 같은 문구가 반복될 수 있어요. 원국 전체·대운·용신을 종합한 풀이가 아니에요.',
   };
@@ -98,6 +102,7 @@ export function interpretDetailedFortune(result, periods, catalog = DEFAULT_CONT
       }
       return {
         ...context, status: 'available', reading: structuredClone(monthly), bridge: structuredClone(bridge),
+        narrative: interpretMonthlyNarrative(context.basis),
         contentIds: [...MONTHLY_FIELDS.map((field) => monthly[field].id), bridge.id],
       };
     });

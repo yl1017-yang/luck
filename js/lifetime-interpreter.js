@@ -2,6 +2,8 @@ import { DAY_MASTERS } from './content/interpretations.js';
 import { LIFE_ELEMENTS, ANNUAL_READINGS, LIFETIME_VERSION } from './content/lifetime.js';
 import { annualPillar, springBoundary, tenGodForStems } from './saju-calculator.js';
 import { koreaDate } from './profile.js';
+import { interpretLifeNarrative } from './lifetime-narrative.js';
+import { interpretAnnualNarrative } from './annual-narrative.js';
 
 export function interpretLifetime(result, now = new Date()) {
   if (!result) return null;
@@ -16,14 +18,17 @@ export function interpretLifetime(result, now = new Date()) {
   const master = DAY_MASTERS[result.features.dayMaster.hanja];
   const life = LIFE_ELEMENTS[result.features.dayMaster.element];
   const years = [];
-  const endYear = Math.min(activeYear + 4, 2050);
+  const endYear = Math.min(activeYear + 1, 2050);
   for (let year = activeYear; year <= endYear; year += 1) {
     const annual = annualPillar(year);
     const tenGod = tenGodForStems(result.features.dayMaster.hanja, annual.pillar.stem.hanja);
-    years.push({ ...annual, tenGod, reading: ANNUAL_READINGS[tenGod], current: year === activeYear && !nearBoundary });
+    years.push({ ...annual, tenGod, reading: ANNUAL_READINGS[tenGod],
+      narrative: interpretAnnualNarrative(result.features.dayMaster.hanja, annual),
+      current: year === activeYear && !nearBoundary });
   }
   return {
     version: LIFETIME_VERSION,
+    narrative: interpretLifeNarrative(result),
     dateKey,
     master,
     title: life.title,

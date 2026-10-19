@@ -61,8 +61,8 @@ function renderToday() {
   $('#daily-note').textContent = reading?.note || '같은 입력과 날짜에는 같은 내용을 보여드려요.';
   $('#daily-action-title').textContent = reading?.action.title || '오늘의 작은 실천';
   $('#daily-action-text').textContent = reading?.action.text || '출생 정보 입력 후 오늘의 제안을 확인해 보세요.';
-  $('#daily-explanation').textContent = errorMessage || reading?.explanation || '오늘의 운세는 날짜별로 고르는 생활 제안이에요.';
-  $('#daily-coverage').textContent = reading?.coverage || '';
+  $('#daily-error').textContent = errorMessage;
+  $('#daily-error').hidden = !errorMessage;
   renderHints('#daily-hints', reading?.hints || []);
   renderElements(currentResult);
   const nextKey = reading ? `${currentResult.profile.birthDate}|${currentResult.profile.calendar}|${currentResult.profile.leapMonth}|${reading.dateKey}|${reading.action.id}` : null;

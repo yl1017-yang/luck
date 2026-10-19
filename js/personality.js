@@ -16,5 +16,4 @@ onBirthResult((result) => {
     $('#personality-tags').append(span);
   }
   renderCards('#personality-details', reading?.personality.details || []);
-  $('#personality-note').textContent = reading?.note || '과학적인 성격 진단이 아닌, 나를 돌아보기 위한 콘텐츠예요.';
 });

@@ -2,7 +2,6 @@ import { calculateFortunePeriods } from './fortune-periods.js';
 import { interpretDetailedFortune } from './fortune-interpreter.js';
 import { FORTUNE_VIEW_KEY, koreaClock, validYear, validSelection, defaultSelection, formatFortuneRange } from './fortune-view-state.js';
 
-const AREAS = { overview: '총론', wealth: '재물운', work: '직장·사업운', homeHealth: '가정·건강운', relationships: '이성·대인관계' };
 const $ = (selector) => document.querySelector(selector);
 const element = (tag, text, className) => {
   const node = document.createElement(tag);
@@ -38,14 +37,13 @@ export function createFortuneView() {
   function clear(message) {
     status.textContent = message;
     $('#fortune-content').hidden = true;
-    $('#fortune-areas').replaceChildren();
     $('#fortune-month-content').replaceChildren();
     signature = '';
   }
 
   function render(now = new Date()) {
     yearSelect.disabled = !result;
-    if (!result) { clear('출생 정보를 입력하면 분야별 운세와 12개월 월운을 확인할 수 있어요.'); return; }
+    if (!result) { clear('출생 정보를 입력하면 연도별로 12개월 월운을 확인할 수 있어요.'); return; }
     const minimum = Math.max(1901, result.dates.solar.year);
     if (optionsMinimum !== minimum) {
       yearSelect.replaceChildren(element('option', '연도를 선택해 주세요'));
@@ -89,59 +87,16 @@ export function createFortuneView() {
       if (reading.status === 'unavailable-day-master') { clear('일간을 확정할 수 없어 상세 해석을 제공하지 못해요. 출생 정보를 확인해 주세요.'); return; }
       $('#fortune-content').hidden = false;
       status.textContent = `${year}년 양력 기준 · ${formatFortuneRange(reading.range)}${reading.partial ? ' · 부분 사주: 미확정 기둥 제외' : ''}${reading.current.nearBoundary ? ' · 절입 ±60초: 현재 구간을 확정하지 않아요.' : ''}`;
-      $('#fortune-note').textContent = reading.note;
       const nextSignature = JSON.stringify([selection, reading.current, reading.contentStatus]);
       if (signature === nextSignature) return;
       signature = nextSignature;
       const focused = document.activeElement;
       const focusedMonth = focused?.closest('#fortune-months') ? focused.dataset.month : null;
-      const focusedCycle = focused?.closest('#fortune-cycles') ? focused.dataset.cycle : null;
-      renderCycles(reading, now);
-      renderAnnual(reading);
       renderMonths(reading);
       if (focusedMonth) $(`#fortune-months [data-month="${focusedMonth}"]`)?.focus({ preventScroll: true });
-      if (focusedCycle) $(`#fortune-cycles [data-cycle="${focusedCycle}"]`)?.focus({ preventScroll: true });
       save();
     } catch {
       clear('기간을 계산하지 못했어요. 다른 연도를 선택하거나 출생 정보를 다시 확인해 주세요.');
-    }
-  }
-
-  function renderCycles(reading, now) {
-    const container = $('#fortune-cycles');
-    container.replaceChildren();
-    const nearSpring = reading.annualReadings.some((annual) => Math.abs(Date.parse(annual.sourceStart) - now.getTime()) <= 60000);
-    for (const annual of reading.annualReadings) {
-      const button = element('button', null, 'button button-outline fortune-cycle');
-      button.type = 'button';
-      button.dataset.cycle = annual.cycleYear;
-      button.setAttribute('aria-pressed', String(selection.cycleYear === annual.cycleYear));
-      const current = !nearSpring && Date.parse(annual.start) <= now.getTime() && now.getTime() < Date.parse(annual.end);
-      button.append(element('strong', `${annual.cycleYear} 세운 · ${annual.pillar.hangul}(${annual.pillar.hanja})${current ? ' · 현재 구간' : ''}`), element('span', formatFortuneRange(annual), 'small'));
-      button.addEventListener('click', () => { selection.cycleYear = annual.cycleYear; pinned = true; render(); $('#fortune-cycles [aria-pressed="true"]')?.focus(); });
-      container.append(button);
-    }
-  }
-
-  function renderAnnual(reading) {
-    const container = $('#fortune-areas');
-    container.replaceChildren();
-    const annual = reading.annualReadings.find((item) => item.cycleYear === selection.cycleYear);
-    if (!annual) { container.append(element('p', '입춘 경계의 두 세운 후보 중 읽을 구간을 직접 선택해 주세요.', 'info-note')); return; }
-    for (const [key, label] of Object.entries(AREAS)) {
-      const area = annual.areas[key];
-      const card = element('article', null, 'card fortune-area');
-      card.append(element('h3', label));
-      if (area.status !== 'available') card.append(element('p', area.message), element('p', formatFortuneRange(annual), 'muted small'));
-      else {
-        card.append(element('h4', area.title), element('p', area.summary, 'info-note'));
-        for (const paragraph of area.paragraphs) card.append(element('p', paragraph, 'body-copy'));
-        for (const [field, title] of [['opportunity', '살펴볼 기회'], ['caution', '주의할 점'], ['action', '실천 제안']]) {
-          card.append(element('h4', title), element('p', area[field], 'body-copy'));
-        }
-        card.append(basisDetails(annual.basis));
-      }
-      container.append(card);
     }
   }
 
@@ -166,14 +121,12 @@ export function createFortuneView() {
       const card = element('article', null, 'annual-card fortune-month-segment');
       const active = reading.current.activeSegmentId === segment.id;
       const candidate = reading.current.candidateSegmentIds.includes(segment.id);
-      card.append(element('h5', `${segment.pillar.hangul}(${segment.pillar.hanja}) · ${segment.tenGod}${active ? ' · 현재 구간' : candidate ? ' · 경계 후보' : ''}`));
+      card.append(element('h5', `${segment.narrative?.title || '이 기간의 월운'}${active ? ' · 현재 구간' : candidate ? ' · 경계 후보' : ''}`));
       card.append(element('p', formatFortuneRange(segment), 'muted small'));
-      if (segment.continuedFromPreviousMonth) card.append(element('p', '전월에서 이어지는 절기 구간이에요.', 'muted small'));
       if (segment.status !== 'available') card.append(element('p', segment.message || '이 해석을 준비하지 못했어요.'));
       else {
-        card.append(element('p', segment.reading.title, 'badge'), element('p', segment.reading.summary.text, 'info-note'), element('p', segment.bridge.text, 'body-copy'));
-        for (const [field, label] of Object.entries({ wealth: AREAS.wealth, work: AREAS.work, homeHealth: AREAS.homeHealth, relationships: AREAS.relationships, caution: '주의할 점', action: '실천 제안' })) {
-          card.append(element('h6', label), element('p', segment.reading[field].text, 'body-copy'));
+        for (const paragraph of segment.narrative.paragraphs) {
+          card.append(element('p', paragraph, 'body-copy'));
         }
         card.append(basisDetails(segment.basis));
       }

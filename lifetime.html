@@ -59,13 +59,13 @@
           <div>
             <span id="lifetime-status" class="badge">정보 입력 대기</span>
             <h2 id="lifetime-title">나를 지탱하는 삶의 방향</h2>
-            <p id="lifetime-intro" class="body-copy">출생 정보를 입력하면 인생 전반의 경향과 연도별 생활 주제를 확인할 수 있어요.</p>
+            <div id="lifetime-intro" class="body-copy">출생 정보를 입력하면 평생 총운과 초년·중년·말년의 관점을 확인할 수 있어요.</div>
             <div id="lifetime-tags" class="trait-tags"></div>
           </div>
           <span class="personality-art" aria-hidden="true">✳</span>
         </article>
         <div id="lifetime-details" class="explanation-grid"></div>
-        <p id="lifetime-note" class="muted small interpretation-note" role="status">수명이나 특정 나이의 사건을 예측하지 않는 자기 성찰용 콘텐츠예요.</p>
+        <p id="lifetime-error" class="info-note" role="status" hidden></p>
         <article class="card annual-section">
           <div class="section-heading">
             <h2>입춘 기준으로 보는 연도별 흐름</h2>
@@ -76,8 +76,8 @@
         </article>
         <section id="annual-detail" class="fortune-detail" aria-labelledby="fortune-title">
           <div class="card">
-            <h2 id="fortune-title">분야별 운세·월운</h2>
-            <p class="body-copy">양력 연도를 고르고, 입춘 전후의 세운과 월별 생활 주제를 살펴보세요.</p>
+            <h2 id="fortune-title">연도별 월운</h2>
+            <p class="body-copy">연도를 선택하면 1~12월의 흐름을 확인할 수 있어요.</p>
             <div class="form-field">
               <label for="fortune-year">조회 연도 (양력)</label>
               <select id="fortune-year" class="form-input" aria-describedby="fortune-status" disabled>
@@ -87,16 +87,9 @@
             <p id="fortune-status" class="info-note" role="status">출생 정보를 입력해 주세요.</p>
           </div>
           <div id="fortune-content" hidden>
-            <div class="card">
-              <h3>적용 세운 선택</h3>
-              <p class="muted">입춘을 기준으로 세운이 바뀌어요. 아래 기간은 선택 연도와 출생일 이후에 해당하는 범위예요.</p>
-              <div id="fortune-cycles" class="fortune-cycles" role="group" aria-label="적용 세운 선택"></div>
-              <p id="fortune-note" class="muted small"></p>
-            </div>
-            <div id="fortune-areas" class="fortune-areas"></div>
             <section class="card fortune-monthly" aria-labelledby="fortune-month-title">
               <h3 id="fortune-month-title">월별 운세(월운)</h3>
-              <p class="body-copy">양력 1~12월을 절기 전후로 나누어 보여드려요. 월운의 세운 기준은 각 기간에 따라 정해지며 위 세운 선택과 별개예요.</p>
+              <p class="body-copy">양력 1~12월을 절기 전후로 나누어 보여드려요. 각 기간의 월운과 세운을 함께 반영합니다.</p>
               <div id="fortune-months" class="fortune-months" role="group" aria-label="조회 월 선택"></div>
               <div id="fortune-month-content" role="region" aria-label="선택 월 풀이"></div>
             </section>
@@ -106,7 +99,7 @@
 
       <footer>
         <a class="brand footer-brand" href="./index.html"> 오늘의 결 <span class="brand-dot"> . </span> </a>
-        <p> 운세는 재미와 자기 성찰을 위한 콘텐츠예요. 오늘의 선택은 언제나 나에게 있어요. </p>
+
         <span> © <span id="year"> </span> 오늘의 결 </span>
       </footer>
     </main>
