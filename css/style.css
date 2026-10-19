@@ -446,10 +446,15 @@ h6 {font:inherit;}
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:18px;
+  row-gap:0;
   margin-bottom:20px;
 }
 
 .summary-card {
+  display:grid;
+  grid-row:span 2;
+  grid-template-rows:subgrid;
+  row-gap:0;
   border-radius:16px;
   overflow:hidden;
   background:var(--ink);
@@ -473,6 +478,13 @@ h6 {font:inherit;}
 .summary-main h2 {
   font-size:24px;
   font-weight:600;
+  line-height:1.3;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+
+.summary-main > div {
+  min-width:0;
 }
 
 .summary-main h2 span {
@@ -499,11 +511,16 @@ h6 {font:inherit;}
 }
 
 .summary-foot {
+  display:flex;
+  align-items:center;
   background:var(--lime);
   color:var(--ink);
   padding:9px 20px;
   font-size:13px;
   font-weight:600;
+  line-height:1.5;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
 }
 
 .summary-foot.mint {
@@ -1166,6 +1183,7 @@ input[type=checkbox],input[type=radio] {
 
   .summary-main h2 {
     font-size:22px;
+
   }
 
   .summary-icon {
@@ -1226,6 +1244,7 @@ input[type=checkbox],input[type=radio] {
 
   .summary-grid {
     gap:10px;
+    row-gap:0;
   }
 
   .summary-main {
@@ -1331,6 +1350,7 @@ input[type=checkbox],input[type=radio] {
 
   .summary-grid {
     grid-template-columns:1fr;
+    row-gap:16px;
   }
 
   .summary-main {
@@ -1440,4 +1460,43 @@ input[type=checkbox],input[type=radio] {
 
   }
 
+}
+
+.annual-story h3,
+.personal-preview h3 {
+  font-size: 25px;
+  line-height: 1.45;
+  margin: 18px 0;
+}
+.annual-story .body-copy,
+.personal-preview .body-copy {
+  /* line-height: 1.85; */
+}
+.personal-preview-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.personal-preview {
+  display: flex;
+  flex-direction: column;
+}
+.personal-preview > .button {
+  margin-top: auto;
+  align-self: flex-start;
+}
+.preview-points {
+  margin: 0 0 24px;
+}
+.preview-points dt {
+  font-weight: 700;
+  margin-top: 16px;
+}
+.preview-points dd {
+  margin: 6px 0 0;
+  line-height: 1.75;
+  color: #50574a;
+}
+@media (max-width: 760px) {
+  .personal-preview-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

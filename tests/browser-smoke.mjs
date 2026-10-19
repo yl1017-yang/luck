@@ -65,12 +65,12 @@ try {
   await call('Emulation.setDeviceMetricsOverride', { width: 1280, height: 950, deviceScaleFactor: 1, mobile: false });
   await call('Page.navigate', { url: `${base}/index.html` });
   await waitFor("document.querySelector('[name=birthYear]')?.options.length > 1");
-  assert.equal(await evaluate("document.querySelector('#action-toggle').disabled"), true);
+  assert.equal(await evaluate("document.querySelector('#annual-year').textContent === '정보 입력 대기'"), true);
   assert.equal(await evaluate("document.querySelectorAll('.element-column').length"), 0);
   await evaluate("sessionStorage.setItem('luck.birthProfile.v1', '{broken')");
   await call('Page.reload');
   await waitFor("document.querySelector('[name=birthYear]')?.options.length > 1");
-  assert.equal(await evaluate("document.querySelector('#action-toggle').disabled"), true);
+  assert.equal(await evaluate("document.querySelector('#annual-year').textContent === '정보 입력 대기'"), true);
   await evaluate(`(() => {
     document.querySelector('#edit-profile').click();
     document.querySelector('#profile-form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
@@ -101,13 +101,16 @@ try {
     form.elements.birthTime.value = '12:00';
     form.requestSubmit();
   })()`);
-  await waitFor("!document.querySelector('#profile-dialog').open && !document.querySelector('#action-toggle').disabled");
-  assert.equal(await evaluate("document.querySelectorAll('#daily-hints .hint-row').length"), 4);
+  await waitFor("!document.querySelector('#profile-dialog').open && document.querySelectorAll('#lifetime-preview-stages dt').length === 3");
+  assert.equal(await evaluate("document.querySelectorAll('#annual-summary > p').length"), 4);
+  assert.ok(await evaluate("document.querySelector('#annual-keyword').textContent === document.querySelector('#annual-title').textContent"));
+  assert.ok(await evaluate("document.querySelector('#annual-summary > p').textContent.startsWith(document.querySelector('#annual-keyword-summary').textContent)"));
   assert.equal(await evaluate("Array.from(document.querySelectorAll('.element-column > span')).reduce((sum, el) => sum + Number(el.textContent), 0)"), 8);
   assert.equal(await evaluate("document.querySelector('#page-title b') === null"), true);
   const originalTheme = await evaluate("document.querySelector('#daily-keyword').textContent");
-  await evaluate("document.querySelector('#action-toggle').click()");
-  assert.equal(await evaluate("document.querySelector('#action-toggle').getAttribute('aria-pressed')"), 'true');
+  assert.equal(await evaluate("document.querySelectorAll('#personality-preview-points dt').length"), 2);
+  assert.equal(await evaluate("document.querySelectorAll('#lifetime-preview-stages dt').length"), 3);
+  assert.ok(await evaluate("document.querySelector('#personality-preview-title').textContent !== document.querySelector('#lifetime-preview-title').textContent"));
 
   await evaluate("document.querySelector('a[href=\"./personality.html\"]').click()");
   await waitFor("document.querySelectorAll('#personality-details .card').length === 6");
@@ -182,12 +185,12 @@ try {
   await evaluate("document.querySelector('a[href=\"./index.html\"]').click()");
   await waitFor("document.querySelectorAll('.element-column').length === 5");
   assert.equal(await evaluate("Array.from(document.querySelectorAll('.element-column > span')).reduce((sum, el) => sum + Number(el.textContent), 0)"), 6);
-  assert.equal(await evaluate("document.querySelector('#action-toggle').getAttribute('aria-pressed')"), 'false');
+  assert.ok(await evaluate("document.querySelector('#lifetime-preview-stages dd:last-child').textContent.includes('보류')"));
 
   // Same input survives reload with the same theme.
   const theme = await evaluate("document.querySelector('#daily-keyword').textContent");
   await call('Page.reload');
-  await waitFor("!document.querySelector('#action-toggle')?.disabled");
+  await waitFor("document.querySelectorAll('#lifetime-preview-stages dt').length === 3");
   assert.equal(await evaluate("document.querySelector('#daily-keyword').textContent"), theme);
 
   // Verify the page's timer-driven Korean midnight path without waiting overnight.
@@ -283,7 +286,7 @@ try {
     form.elements.birthTime.value = '00:00';
     form.requestSubmit();
   })()`);
-  await waitFor("!document.querySelector('#action-toggle')?.disabled");
+  await waitFor("document.querySelectorAll('#lifetime-preview-stages dt').length === 3");
   assert.ok((await evaluate("document.querySelector('#profile-description').textContent")).includes('임시 보관 불가'));
   await call('Page.removeScriptToEvaluateOnNewDocument', { identifier: injection.identifier });
   assert.deepEqual(errors, []);
