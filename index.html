@@ -56,7 +56,7 @@
             <div class="summary-main">
               <span class="summary-icon" aria-hidden="true"> ✺ </span>
               <div>
-                <p>오늘의 핵심</p>
+                <p>오늘의 키워드</p>
                 <h2 id="daily-keyword">정보 입력 전</h2>
               </div>
               <span class="card-arrow" aria-hidden="true"> ↗ </span>
@@ -69,7 +69,7 @@
             <div class="summary-main">
               <span class="summary-icon" aria-hidden="true"> ♧ </span>
               <div>
-                <p>나의 일간</p>
+                <p>나를 나타내는 일간</p>
                 <h2 id="daily-master">—</h2>
               </div>
               <span class="card-arrow" aria-hidden="true"> ↗ </span>
@@ -80,21 +80,34 @@
             <div class="summary-main">
               <span class="summary-icon" aria-hidden="true"> ✧ </span>
               <div>
-                <p>올해의 핵심</p>
-                <h2 id="annual-keyword">정보 입력 전</h2>
+                <p>일간으로 살펴보는 성향</p>
+                <h2 id="daily-personality">—</h2>
               </div>
               <span class="card-arrow" aria-hidden="true"> ↗ </span>
             </div>
-            <div id="annual-keyword-summary" class="summary-foot">출생 정보를 입력해 주세요</div>
+            <div class="summary-foot">나를 돌아보는 자기 성찰용 해석</div>
           </article>
         </div>
         <div class="dashboard-grid content-grid">
-          <article class="card annual-story">
-            <div class="section-heading"><h2>올해 나에게 중요한 흐름</h2><span id="annual-year" class="badge">정보 입력 대기</span></div>
-            <h3 id="annual-title">나의 올해 흐름</h3>
-            <div id="annual-summary"></div>
-            <p id="annual-boundary" class="info-note" role="status" hidden></p>
-            <a class="button button-soft" href="./lifetime.html#annual-cards">올해 운세 자세히 보기 ↗</a>
+          <article class="card daily-story">
+            <div class="section-heading">
+              <h2> 오늘의 흐름 </h2> 
+              <span id="daily-date" class="badge">정보 입력 대기</span>
+            </div>
+            <div class="story-layout">
+              <div>
+                <h3 id="daily-title">나에게 맞는 오늘의 힌트</h3>
+                <p id="daily-intro" class="body-copy">출생 정보를 입력하면 날짜에 맞춘 생활 조언을 볼 수 있어요.</p>
+                <div id="daily-note" class="story-note">같은 입력과 날짜에는 같은 내용을 보여드려요.</div>
+              </div>
+              <div class="orbit-art" aria-hidden="true">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="orbit-core"> ✳ </div> 
+                <span class="orbit-spark"> ✦ </span>
+                <span class="orbit-caption"> MAKE YOUR <br> OWN LUCK </span>
+              </div>
+            </div>
           </article>
           <article class="card elements-card">
             <div class="section-heading">
@@ -108,28 +121,29 @@
             </div>
           </article>
         </div>
-        <div class="dashboard-grid personal-preview-grid">
-          <article class="card personal-preview">
-            <div class="section-heading"><h2>나는 어떤 사람인가</h2></div>
-            <h3 id="personality-preview-title">나의 성향</h3>
-            <div id="personality-preview-copy"></div>
-            <dl id="personality-preview-points" class="preview-points"></dl>
-            <a class="button button-dark" href="./personality.html">내 성향 자세히 보기 ↗</a>
+        <div class="dashboard-grid">
+          <article class="card">
+            <div class="section-heading">
+              <h2> 분야별 오늘의 힌트 </h2> 
+              <span class="muted small"> 가볍게 읽어보세요 </span>
+            </div>
+            <div id="daily-hints" class="hint-list"></div>
           </article>
-          <article class="card card-lime personal-preview">
-            <div class="section-heading"><h2>내 인생은 어떤 흐름인가</h2></div>
-            <h3 id="lifetime-preview-title">나의 평생운세</h3>
-            <div id="lifetime-preview-copy"></div>
-            <dl id="lifetime-preview-stages" class="preview-points"></dl>
-            <a class="button button-dark" href="./lifetime.html">평생운세 자세히 보기 ↗</a>
+          <article class="card card-lime action-card">
+            <span class="action-star" aria-hidden="true"> ✳ </span>
+            <h2 id="daily-action-title">오늘의 작은 실천</h2>
+            <p id="daily-action-text">출생 정보 입력 후 오늘의 제안을 확인해 보세요.</p>
+            <button id="action-toggle" class="button button-dark button-full" aria-pressed="false" disabled>오늘의 실천 체크</button>
+            <span class="action-note"> 체크는 현재 페이지에서만 유지돼요. </span>
           </article>
         </div>
-        <p id="daily-error" class="info-note" role="status" hidden></p>
+        <p id="daily-explanation" class="muted small interpretation-note" role="status">오늘의 운세는 날짜별로 고르는 생활 제안이에요.</p>
+        <p id="daily-coverage" class="muted small interpretation-note"></p>
       </section>
 
       <footer>
         <a class="brand footer-brand" href="./index.html"> 오늘의 결 <span class="brand-dot"> . </span> </a>
-
+        <p> 운세는 재미와 자기 성찰을 위한 콘텐츠예요. 오늘의 선택은 언제나 나에게 있어요. </p>
         <span> © <span id="year"> </span> 오늘의 결 </span>
       </footer>
     </main>
@@ -175,7 +189,7 @@
         </fieldset>
         <div class="form-field">
           <label for="birth-time"> 출생 시간 </label>
-          <input class="form-input" type="time" id="birth-time" name="birthTime" step="60" required>
+          <input class="form-input" type="time" id="birth-time" name=xx"birthTime" step="60" required>
         </div>
         <label class="checkbox-label">
           <input type="checkbox" id="unknown-time" name="unknownTime"> 출생 시간을 몰라요
