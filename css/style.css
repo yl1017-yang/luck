@@ -886,24 +886,30 @@ h6 {font:inherit;}
   color:#6c947f;
 }
 
-#lifetime-view .personality-hero {
+#lifetime-view .personality-hero,
+#personality-view .personality-hero {
   grid-template-columns:minmax(0,1fr);
 }
 
-#lifetime-view .personality-art {
+#lifetime-view .personality-art,
+#personality-view .personality-art {
   display:none;
 }
 
-#lifetime-view .personality-hero .body-copy {
+#lifetime-view .personality-hero .body-copy,
+#personality-view .personality-hero .body-copy {
   max-width:none;
 }
 
-#lifetime-details {
+#lifetime-details,
+#personality-details {
   grid-template-columns:minmax(0,1fr);
 }
 
 #lifetime-details p,
-#lifetime-intro p {
+#lifetime-intro p,
+#personality-details p,
+#personality-intro p {
   line-height:1.6;
   margin:8px 0;
 }

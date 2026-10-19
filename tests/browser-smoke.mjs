@@ -110,7 +110,9 @@ try {
   assert.equal(await evaluate("document.querySelector('#action-toggle').getAttribute('aria-pressed')"), 'true');
 
   await evaluate("document.querySelector('a[href=\"./personality.html\"]').click()");
-  await waitFor("document.querySelectorAll('#personality-details .card').length === 5");
+  await waitFor("document.querySelectorAll('#personality-details .card').length === 6");
+  assert.ok(await evaluate("document.querySelector('#personality-intro > p').textContent.startsWith('당신은')"));
+  assert.ok(await evaluate("Array.from(document.querySelectorAll('#personality-details > article')).every(card => card.querySelectorAll('p').length >= 3)"));
   assert.ok((await evaluate("document.querySelector('#page-title').textContent")).includes('<b>test</b>'));
   assert.equal(await evaluate("document.querySelectorAll('#personality-tags span').length"), 3);
   await evaluate("document.querySelector('a[href=\"./saju.html\"]').click()");
