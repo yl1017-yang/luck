@@ -1,0 +1,185 @@
+{
+  "checkedOn": "2026-10-19",
+  "branchCount": 12,
+  "stemMembershipCount": 28,
+  "memberMismatches": 0,
+  "orderDifferences": 5,
+  "sources": {
+    "hidden": [
+      "https://sajumania.com/ebook/to01-06/to01-06-01-61.htm",
+      "https://www.donglishuzhai.net/chapter/12808.html"
+    ],
+    "relations": [
+      "https://www.donglishuzhai.net/chapter/12812.html",
+      "https://zh.wikisource.org/zh-hant/三命通會/卷五"
+    ],
+    "cycle": "https://www.hko.gov.hk/en/gts/time/stemsandbranches.htm",
+    "terms": "https://www.hko.gov.hk/en/gts/time/24solarterms.htm"
+  },
+  "rows": [
+    {
+      "branch": "子",
+      "reference": [
+        "癸"
+      ],
+      "adopted": [
+        "癸"
+      ],
+      "sameMembers": true,
+      "sameOrder": true
+    },
+    {
+      "branch": "丑",
+      "reference": [
+        "癸",
+        "辛",
+        "己"
+      ],
+      "adopted": [
+        "己",
+        "癸",
+        "辛"
+      ],
+      "sameMembers": true,
+      "sameOrder": false
+    },
+    {
+      "branch": "寅",
+      "reference": [
+        "甲",
+        "丙",
+        "戊"
+      ],
+      "adopted": [
+        "甲",
+        "丙",
+        "戊"
+      ],
+      "sameMembers": true,
+      "sameOrder": true
+    },
+    {
+      "branch": "卯",
+      "reference": [
+        "乙"
+      ],
+      "adopted": [
+        "乙"
+      ],
+      "sameMembers": true,
+      "sameOrder": true
+    },
+    {
+      "branch": "辰",
+      "reference": [
+        "乙",
+        "戊",
+        "癸"
+      ],
+      "adopted": [
+        "戊",
+        "乙",
+        "癸"
+      ],
+      "sameMembers": true,
+      "sameOrder": false
+    },
+    {
+      "branch": "巳",
+      "reference": [
+        "庚",
+        "丙",
+        "戊"
+      ],
+      "adopted": [
+        "丙",
+        "庚",
+        "戊"
+      ],
+      "sameMembers": true,
+      "sameOrder": false
+    },
+    {
+      "branch": "午",
+      "reference": [
+        "丁",
+        "己"
+      ],
+      "adopted": [
+        "丁",
+        "己"
+      ],
+      "sameMembers": true,
+      "sameOrder": true
+    },
+    {
+      "branch": "未",
+      "reference": [
+        "乙",
+        "己",
+        "丁"
+      ],
+      "adopted": [
+        "己",
+        "丁",
+        "乙"
+      ],
+      "sameMembers": true,
+      "sameOrder": false
+    },
+    {
+      "branch": "申",
+      "reference": [
+        "庚",
+        "壬",
+        "戊"
+      ],
+      "adopted": [
+        "庚",
+        "壬",
+        "戊"
+      ],
+      "sameMembers": true,
+      "sameOrder": true
+    },
+    {
+      "branch": "酉",
+      "reference": [
+        "辛"
+      ],
+      "adopted": [
+        "辛"
+      ],
+      "sameMembers": true,
+      "sameOrder": true
+    },
+    {
+      "branch": "戌",
+      "reference": [
+        "辛",
+        "丁",
+        "戊"
+      ],
+      "adopted": [
+        "戊",
+        "辛",
+        "丁"
+      ],
+      "sameMembers": true,
+      "sameOrder": false
+    },
+    {
+      "branch": "亥",
+      "reference": [
+        "壬",
+        "甲"
+      ],
+      "adopted": [
+        "壬",
+        "甲"
+      ],
+      "sameMembers": true,
+      "sameOrder": true
+    }
+  ]
+}

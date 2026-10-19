@@ -115,7 +115,8 @@ try {
   assert.equal(await evaluate("document.querySelectorAll('#personality-tags span').length"), 3);
   await evaluate("document.querySelector('a[href=\"./saju.html\"]').click()");
   await waitFor("document.querySelector('#saju-status')?.textContent === '계산 완료'");
-  assert.equal(await evaluate("document.querySelectorAll('#saju-explanations .card').length"), 6);
+  assert.equal(await evaluate("document.querySelectorAll('#saju-explanations .card').length"), 4);
+  assert.equal(await evaluate("document.querySelector('#natal-content').hidden"), false);
   await evaluate("document.querySelector('a[href=\"./lifetime.html\"]').click()");
   await waitFor("document.querySelectorAll('#annual-cards .annual-card').length === 5");
   assert.equal(await evaluate("document.querySelectorAll('#lifetime-details .card').length"), 6);

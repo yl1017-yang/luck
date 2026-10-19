@@ -244,6 +244,87 @@ h6 {font:inherit;}
   margin-top: 24px;
 }
 
+.natal-detail,
+.natal-glossary {
+  margin-top: 24px;
+}
+
+.natal-detail h2 {
+  font-size: 26px;
+  margin-bottom: 14px;
+}
+
+.natal-group h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 32px 0 18px;
+  scroll-margin-top: 24px;
+}
+
+.natal-card {
+  margin-top: 18px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.natal-card h4 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.natal-card h5 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 20px 0 12px;
+}
+
+.natal-card p,
+.natal-intro p {
+  margin-top: 12px;
+}
+
+.natal-card .body-copy,
+.natal-block .muted {
+  max-width: 80ch;
+}
+
+.natal-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.natal-copy,
+.natal-basis {
+  margin-top: 20px;
+  line-height: 1.8;
+}
+
+.natal-copy > summary,
+.natal-basis > summary,
+.natal-glossary > summary {
+  cursor: pointer;
+  line-height: 1.8;
+}
+
+.natal-hidden-stems {
+  padding-left: 24px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+
+.natal-glossary .explanation-grid {
+  margin-top: 20px;
+}
+
+.natal-detail summary:focus-visible,
+.natal-glossary > summary:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 4px;
+}
+
 .fortune-detail {
   margin-top: 24px;
   scroll-margin-top: 24px;

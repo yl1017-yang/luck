@@ -63,7 +63,25 @@
           <div id="saju-note" class="info-note" role="status">출생 정보를 입력하면 사주 네 기둥을 확인할 수 있어요.</div>
           <a class="button button-outline" href="./lifetime.html#annual-detail">분야별 운세·월운 보기 ↗</a>
         </article>
-        <div id="saju-explanations" class="explanation-grid"></div>
+        <section id="natal-detail" class="natal-detail" aria-labelledby="natal-title">
+          <div class="card natal-intro">
+            <h2 id="natal-title">나의 원국 상세 풀이</h2>
+            <p class="body-copy">태어난 때의 확정된 글자와 저장된 설명을 연결해 나의 기본 경향을 살펴보세요.</p>
+            <p id="natal-status" class="info-note" role="status">출생 정보를 입력해 주세요.</p>
+            <nav id="natal-navigation" class="natal-navigation" aria-label="원국 상세 영역 이동" hidden>
+              <a class="button button-outline" href="#natal-summary">원국 요약</a>
+              <a class="button button-outline" href="#natal-identity">일간·일주</a>
+              <a class="button button-outline" href="#natal-pillars">십성·지장간</a>
+              <a class="button button-outline" href="#natal-season">계절·오행</a>
+              <a class="button button-outline" href="#natal-fields">분야별 해석</a>
+            </nav>
+          </div>
+          <div id="natal-content" hidden></div>
+        </section>
+        <details class="card natal-glossary">
+          <summary>사주 기초 용어 알아보기</summary>
+          <div id="saju-explanations" class="explanation-grid"></div>
+        </details>
       </section>
 
 

@@ -34,7 +34,7 @@ try {
     try { port = (await readFile(join(profile, 'DevToolsActivePort'), 'utf8')).split('\n')[0]; break; } catch { await new Promise((done) => setTimeout(done, 100)); }
   }
   if (!port) throw new Error('Chrome CDP did not start');
-  for (const file of ['browser-smoke.mjs', 'fortune-browser.mjs']) {
+  for (const file of ['browser-smoke.mjs', 'fortune-browser.mjs', 'natal-browser.mjs']) {
     const child = spawn(process.execPath, [join(import.meta.dirname, file)], { cwd: root, stdio: 'inherit', windowsHide: true,
       env: { ...process.env, LUCK_QA_BASE: `http://127.0.0.1:${server.address().port}`, LUCK_QA_CDP: `http://127.0.0.1:${port}` } });
     const [code] = await once(child, 'exit');
