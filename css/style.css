@@ -1161,7 +1161,6 @@ input[type=checkbox],input[type=radio] {
 .form-error {
   color:#ad4032;
   font-size:14px;
-  min-height:20px;
   margin:10px 0;
 }
 
