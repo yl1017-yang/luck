@@ -2,6 +2,7 @@ import { TIME_ZONE, koreaDate, validateProfile, normalizeProfile } from './profi
 import { convertBirthDate, formatCalendarDate } from './calendar.js';
 import { createDatePicker } from './date-picker.js';
 import { calculateSaju } from './saju-calculator.js';
+import { FORTUNE_VIEW_KEY } from './fortune-view-state.js';
 
 let birthResult = null;
 let displayedDateKey = null;
@@ -22,6 +23,9 @@ function applyProfile(profile) {
 
 const $ = (selector) => document.querySelector(selector);
 const defaultPageTitle = $('#page-title').textContent.trim();
+const defaultProfileTitle = $('#profile-title').textContent;
+const defaultProfileDescription = $('#profile-description').textContent;
+const defaultEditLabel = $('#edit-profile').textContent;
 const pageLabels = {
   'today-view': '오늘의 운세',
   'saju-view': '사주팔자',
@@ -129,3 +133,26 @@ try {
 } catch {
   // Missing, invalid, or unavailable storage should not block the page.
 }
+
+$('#delete-profile').addEventListener('click', () => {
+  let storageFailed = false;
+  for (const key of [PROFILE_KEY, FORTUNE_VIEW_KEY]) {
+    try { sessionStorage.removeItem(key); } catch { storageFailed = true; }
+  }
+  form.reset();
+  for (const name of ['displayName', 'birthYear', 'birthMonth', 'birthDay', 'birthTime']) {
+    form.elements[name].value = '';
+  }
+  syncForm();
+  $('#form-error').textContent = '';
+  $('#page-title').textContent = defaultPageTitle;
+  $('#profile-title').textContent = defaultProfileTitle;
+  $('#profile-description').textContent = storageFailed
+    ? '화면은 초기화했지만 저장 정보 삭제에 실패했어요. 브라우저 설정에서 이 사이트의 데이터를 삭제해 주세요.'
+    : '내 정보를 삭제했어요. ' + defaultProfileDescription.trim();
+  $('#edit-profile').textContent = defaultEditLabel;
+  birthResult = null;
+  document.dispatchEvent(new CustomEvent('luck:birth-result'));
+  dialog.close();
+  $('#edit-profile').focus();
+});
