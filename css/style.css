@@ -583,7 +583,6 @@ h6 {font:inherit;}
 }
 
 .body-copy {
-  font-size:15px;
   line-height:1.6;
   color:#74796f;
   margin-bottom:18px;
@@ -781,7 +780,7 @@ h6 {font:inherit;}
 }
 
 .hint-row h3 {
-  font-size:15px;
+  font-size:16px;
   margin:0 0 3px;
 }
 
@@ -912,7 +911,6 @@ h6 {font:inherit;}
 
 .explanation-grid p {
   color:#747b6c;
-  font-size:15px;
   line-height:1.5;
 }
 
@@ -1097,7 +1095,7 @@ dialog::backdrop {
 }
 
 .form-field label,.form-label,legend {
-  font-size:15px;
+  font-size:16px;
   font-weight:800;
 }
 
@@ -1242,7 +1240,7 @@ input[type=checkbox],input[type=radio] {
 
   .nav-button {
     padding:6px 18px;
-    font-size:15px;
+    font-size:16px;
   }
 
   .dashboard {
@@ -1479,6 +1477,35 @@ input[type=checkbox],input[type=radio] {
 
 }
 
+.annual-overview-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.annual-overview-grid .element-chart {
+  height: 130px;
+}
+.annual-overview-grid .bar-track {
+  height: 88px;
+}
+.annual-overview-grid .elements-explanation {
+  margin-top: 12px;
+}
+.annual-overview-grid .elements-explanation h3 {
+  margin: 0 0 8px;
+}
+.annual-overview-grid .elements-explanation p {
+  margin-bottom: 8px;
+}
+.annual-overview-grid .elements-explanation p:last-child {
+  margin-bottom: 0;
+}
+.annual-story {
+  display: flex;
+  flex-direction: column;
+}
+.annual-story > .button {
+  align-self: flex-start;
+  margin-top: auto;
+}
 .annual-story h3,
 .personal-preview h3 {
   font-size: 25px;
@@ -1513,6 +1540,9 @@ input[type=checkbox],input[type=radio] {
   color: #50574a;
 }
 @media (max-width: 760px) {
+  .annual-overview-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .personal-preview-grid {
     grid-template-columns: minmax(0, 1fr);
   }

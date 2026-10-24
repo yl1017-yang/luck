@@ -102,7 +102,7 @@ try {
     form.requestSubmit();
   })()`);
   await waitFor("!document.querySelector('#profile-dialog').open && document.querySelectorAll('#lifetime-preview-stages dt').length === 3");
-  assert.equal(await evaluate("document.querySelectorAll('#annual-summary > p').length"), 4);
+  assert.equal(await evaluate("document.querySelectorAll('#annual-summary > p').length"), 1);
   assert.ok(await evaluate("document.querySelector('#annual-keyword').textContent === document.querySelector('#annual-title').textContent"));
   assert.ok(await evaluate("document.querySelector('#annual-summary > p').textContent.startsWith(document.querySelector('#annual-keyword-summary').textContent)"));
   assert.equal(await evaluate("Array.from(document.querySelectorAll('.element-column > span')).reduce((sum, el) => sum + Number(el.textContent), 0)"), 8);

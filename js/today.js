@@ -145,12 +145,7 @@ function renderPersonalPreviews() {
     $('#annual-title').textContent = annual.narrative.title;
     $('#annual-keyword').textContent = annual.narrative.title;
     $('#annual-keyword-summary').textContent = firstSentence(annual.narrative.paragraphs[0]);
-    renderParagraphs('#annual-summary', [
-      annual.narrative.paragraphs[0],
-      annual.narrative.paragraphs[1] + ' ' + annual.narrative.paragraphs[2],
-      annual.narrative.paragraphs[3],
-      annual.narrative.paragraphs[4],
-    ]);
+    renderParagraphs('#annual-summary', [annual.narrative.paragraphs[0]]);
     if (lifetime.nearBoundary) {
       $('#annual-keyword-summary').textContent = '입춘 전후 1분 · 연도 구분 미확정';
       $('#annual-boundary').textContent = '입춘 전후 1분 구간이라 올해의 구분을 확정하기 어려워요.';
