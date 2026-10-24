@@ -141,7 +141,19 @@ export function createFortuneView() {
   });
   document.addEventListener('luck:clock-tick', () => render());
   return {
-    update(value) { result = value; signature = ''; render(); },
+    update(value) {
+      if (!value && result) {
+        selection = null;
+        restored = null;
+        pinned = false;
+        optionsMinimum = undefined;
+        yearSelect.replaceChildren();
+        $('#fortune-months').replaceChildren();
+      }
+      result = value;
+      signature = '';
+      render();
+    },
     open(year) {
       if (!validYear(year, result)) return;
       selection = { year, cycleYear: year, month: 1 };

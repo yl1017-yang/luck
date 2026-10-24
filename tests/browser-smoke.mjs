@@ -266,6 +266,23 @@ try {
     }
   }
 
+  for (const file of ['index.html', 'saju.html', 'personality.html', 'lifetime.html']) {
+    await evaluate(`sessionStorage.setItem('luck.birthProfile.v1', JSON.stringify({ displayName: '삭제검증', birthDate: '2000-02-29', calendar: 'solar', leapMonth: false, birthTime: '08:00', unknownTime: false })); sessionStorage.setItem('luck.fortuneView.v1', JSON.stringify({ year: 2025, cycleYear: 2025, month: 3 })); sessionStorage.setItem('unrelated-test', 'keep');`);
+    await call('Page.navigate', { url: `${base}/${file}` });
+    await waitFor("document.querySelector('#page-title')?.textContent.includes('삭제검증')");
+    await evaluate("document.querySelector('#delete-profile').click()");
+    assert.equal(await evaluate("sessionStorage.getItem('luck.birthProfile.v1')"), null);
+    assert.equal(await evaluate("sessionStorage.getItem('luck.fortuneView.v1')"), null);
+    assert.equal(await evaluate("sessionStorage.getItem('unrelated-test')"), 'keep');
+    assert.equal(await evaluate("document.body.textContent.includes('삭제검증')"), false);
+    assert.equal(await evaluate("document.querySelector('[name=displayName]').value"), '');
+    assert.equal(await evaluate("document.querySelector('[name=birthYear]').value"), '');
+    assert.equal(await evaluate("document.querySelector('[name=birthTime]').value"), '');
+    if (file === 'lifetime.html') assert.equal(await evaluate("document.querySelectorAll('#annual-cards .annual-card').length"), 0);
+    await call('Page.reload');
+    await waitFor("document.querySelector('[name=birthYear]')?.options.length > 1");
+    assert.equal(await evaluate("document.body.textContent.includes('삭제검증')"), false);
+  }
   await evaluate("sessionStorage.clear()");
   await call('Page.navigate', { url: `${base}/lifetime.html` });
   await waitFor("document.querySelector('[name=birthYear]')?.options.length > 1");
