@@ -115,6 +115,8 @@ function renderProfile(profile) {
     : `음력 ${formatCalendarDate(converted.lunar)}${converted.lunar.intercalation ? ' (윤달)' : ''}`;
   $('#profile-description').textContent = `${otherDate} · ${time}`;
   $('#edit-profile').textContent = '정보 수정 ↗';
+  $('.profile-bar').classList.remove('profile-bar-empty');
+  $('#delete-profile').hidden = false;
 }
 
 try {
@@ -151,6 +153,8 @@ $('#delete-profile').addEventListener('click', () => {
     ? '화면은 초기화했지만 저장 정보 삭제에 실패했어요. 브라우저 설정에서 이 사이트의 데이터를 삭제해 주세요.'
     : '내 정보를 삭제했어요. ' + defaultProfileDescription.trim();
   $('#edit-profile').textContent = defaultEditLabel;
+  $('.profile-bar').classList.add('profile-bar-empty');
+  $('#delete-profile').hidden = true;
   birthResult = null;
   document.dispatchEvent(new CustomEvent('luck:birth-result'));
   dialog.close();

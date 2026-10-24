@@ -1477,6 +1477,43 @@ input[type=checkbox],input[type=radio] {
 
 }
 
+.profile-bar-empty {
+  background: var(--lime, #def84b);
+  padding: 28px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.profile-bar-empty .profile-copy {
+  flex-basis: 320px;
+  min-width: 0;
+}
+.profile-bar-empty .profile-copy strong {
+  font-size: 24px;
+  line-height: 1.4;
+}
+.profile-bar-empty .profile-copy p {
+  margin-top: 8px;
+  color: #39422c;
+  line-height: 1.7;
+}
+.profile-bar-empty #edit-profile {
+  font-size: 16px;
+  padding: 16px 22px;
+  white-space: normal;
+}
+@media (max-width: 760px) {
+  .profile-bar-empty {
+    padding: 22px;
+  }
+  .profile-bar-empty .profile-icon {
+    display: none;
+  }
+  .profile-bar-empty #edit-profile {
+    width: 100%;
+    margin: 0;
+  }
+}
+
 .annual-overview-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
